@@ -16,13 +16,10 @@ body {
   color: white;
 }
 
-.close {
-  display: none;
-}
-
 .left {
   width: 25vw;
   padding: 9px 10px;
+  overflow-y: auto;
 }
 
 .hamburger {
@@ -30,11 +27,33 @@ body {
   cursor: pointer;
 }
 
+.close {
+  display: none;
+}
+
 .hamburgerContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 14px;
+}
+
+.library {
+  min-height: 97vh;
+  position: relative;
+}
+
+.footer {
+  display: flex;
+  font-size: 9px;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  padding: 10px 0;
+}
+
+.footer a {
+  color: grey;
 }
 
 .right {
@@ -64,24 +83,6 @@ body {
 
 .heading img {
   width: 25px;
-}
-
-.library {
-  min-height: 97vh;
-  position: relative;
-}
-
-.footer {
-  display: flex;
-  font-size: 9px;
-  gap: 10px;
-  position: absolute;
-  bottom: 0;
-  padding: 10px 0;
-}
-
-.footer a {
-  color: grey;
 }
 
 .header {
@@ -190,6 +191,8 @@ body {
   width: 79px;
   cursor: pointer;
   font-size: 16px;
+  border: none;
+  outline: none;
 }
 
 .loginbtn:hover {
@@ -309,8 +312,9 @@ body {
   cursor: pointer;
 }
 
-.volume .range input {
+.volume .range input[type="range"] {
   cursor: pointer;
+  accent-color: black;
 }
 
 .timevol {

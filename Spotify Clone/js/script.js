@@ -158,7 +158,8 @@ async function main() {
 
     // Add Event listener for previous and next:-
     previous.addEventListener("click", () => {
-        let index = songs.indexOf(currentSong.src.split("/").slice(4)[0]);
+        // currentSong.pause();
+        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
         if ((index - 1) >= 0) {
             playMusic(songs[index - 1]);
         }
@@ -166,7 +167,7 @@ async function main() {
 
     next.addEventListener("click", (e) => {
         // currentSong.pause();
-        let index = songs.indexOf(currentSong.src.split("/").slice(4)[0]);
+        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
         if ((index + 1) <= songs.length - 1) {
             playMusic(songs[index + 1]);
         }
@@ -188,8 +189,7 @@ async function main() {
             currentSong.volume = 0.2;
             document.querySelector(".range").getElementsByTagName("input")[0].value = 20;
         }
-    })
-
+    });
 }
 
 main();
