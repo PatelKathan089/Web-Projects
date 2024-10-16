@@ -24,7 +24,7 @@ async function getSongs(folder) {
   for (let i = 0; i < as.length; i++) {
     const element = as[i];
     if (element.href.endsWith(".mp3")) {
-      songs.push(element.href.split(`${folder}`)[1]);
+      songs.push(element.href.split(`${folder}`)[1].slice(1));
     }
   }
 
@@ -38,17 +38,17 @@ async function getSongs(folder) {
   for (const song of songs) {
     songUL.innerHTML =
       songUL.innerHTML +
-      `<li class="list-item"><img class="invert" src="img/music.svg" alt="">
-                            <div class="info">
-                                <div>${song
-                                  .replaceAll("%20", " ")
-                                  .slice(1)}</div>
-                                <div>-</div>
-                            </div>
-                            <div class="playnow">
-                                <span>Play Now</span>
-                                <img class="invert" src="img/play.svg" alt="">
-                            </div> </li>`;
+      `<li class="list-item">
+        <img class="invert" src="img/music.svg" alt="">
+        <div class="info">
+          <div>${song.replaceAll("%20", " ")}</div>
+          <div>-</div>
+        </div>
+        <div class="playnow">
+          <span>Play Now</span>
+          <img class="invert" src="img/play.svg" alt="">
+        </div> 
+      </li>`;
   }
 
   // Attach an event listener to each song:-
@@ -93,21 +93,20 @@ async function displayAlbums() {
       cardContainer.innerHTML =
         cardContainer.innerHTML +
         `<div data-folder = "${folder}" class="card">
-                        <div class="play">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"
-                                fill="000000">
-                                <!-- Circular background -->
-                                <circle cx="12" cy="12" r="12" fill="#0cec09" />
-                                <!-- Original SVG content -->
-                                <path d="M5 20V4L19 12L5 20Z" stroke="#141B34" stroke-width="1.5"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-
-                        <img src="/songs/${folder}/cover.jpeg" alt="">
-                        <h2>${response.title}</h2>
-                        <p>${response.description}</p>
-                    </div>`;
+            <div class="play">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"
+                   fill="000000">
+                   <!-- Circular background -->
+                   <circle cx="12" cy="12" r="12" fill="#0cec09" />
+                   <!-- Original SVG content -->
+                   <path d="M5 20V4L19 12L5 20Z" stroke="#141B34" stroke-width="1.5"
+                    stroke-linejoin="round" />
+              </svg>
+            </div>
+            <img src="/songs/${folder}/cover.jpeg" alt="">
+            <h2>${response.title}</h2>
+            <p>${response.description}</p>
+          </div>`;
     }
   }
 
@@ -116,6 +115,7 @@ async function displayAlbums() {
     e.addEventListener("click", async (item) => {
       songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`);
       playMusic(songs[0]);
+      document.querySelector('.left').style.left = '0%'
     });
   });
 }
@@ -128,7 +128,7 @@ async function main() {
   // Display all the albums on the page:-
   displayAlbums();
 
-  // Attach an event listener to play, next and previous:-
+  // Attach an event listener to play:-
   play.addEventListener("click", () => {
     if (currentSong.paused) {
       currentSong.play();
@@ -165,8 +165,8 @@ async function main() {
   });
 
   // Add Event listener for previous and next:-
-  previous.addEventListener("click", () => {
-    // currentSong.pause();
+  previous.addEventListener("click", (e) => {
+    currentSong.pause()
     let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
     if (index - 1 >= 0) {
       playMusic(songs[index - 1]);
@@ -174,7 +174,7 @@ async function main() {
   });
 
   next.addEventListener("click", (e) => {
-    // currentSong.pause();
+    currentSong.pause();
     let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
     if (index + 1 <= songs.length - 1) {
       playMusic(songs[index + 1]);
