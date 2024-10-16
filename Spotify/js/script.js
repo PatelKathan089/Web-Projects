@@ -71,6 +71,14 @@ const playMusic = (track, pause = false) => {
   }
   document.querySelector(".songinfo").innerHTML = decodeURI(track);
   document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
+
+  // Add event listener for when the song ends
+  currentSong.onended = () => {
+    let index = songs.indexOf(track); // Find the index of the current track
+    if (index + 1 < songs.length) { // Check if there's a next song
+      playMusic(songs[index + 1]); // Play the next song
+    }
+  };
 };
 
 async function displayAlbums() {
