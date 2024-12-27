@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 function Mainbar() {
 
-  const [number, setnumber] = useState("")
+  const [number, setnumber] = useState('')
 
   const handleChange = (e) => {
     setnumber(e.target.value)
@@ -24,6 +25,13 @@ function Mainbar() {
 
     try {
       const result = eval(number) // eval() will follow bodmas rule.
+      const expression = number + '=' + result
+      const date = new Date()
+      const day = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear()
+      const time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+
+      fetch('http://localhost:3000', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: uuidv4(), expression: expression, day: day, time: time }) })
+
       setnumber(result.toString())
 
     } catch {
