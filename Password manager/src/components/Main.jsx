@@ -1,22 +1,28 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useForm } from 'react-hook-form';
 import "./main.css"
-import { v4 as uuidv4 } from 'uuid';
 
 function Main() {
     const pass_ref = useRef();
     const pass_img_ref = useRef();
     const [form, setform] = useState({ site: "", username: "", password: "" })
     const [passwordArray, setpasswordArray] = useState([])
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const getPasswords = async () => {
-        let req = await fetch("http://localhost:3000/")
-        let passwords = await req.json()
-        setpasswordArray(passwords)
-    }
-
+    // Data Retriving:- 
     useEffect(() => {
+        const getPasswords = async () => {
+            let res = await fetch("http://localhost:3000/", {
+                method: 'GET', headers: {
+                    "x-api-key": "mysecureapikey123",
+                    "Content-Type": "application/json"
+                }
+            })
+            let passwords = await res.json()
+            setpasswordArray(passwords)
+        }
         getPasswords()
     }, [])
 
