@@ -14,7 +14,7 @@ const key = process.env.SECRET_KEY;
 
 // Cores Option for allowing access to fronted only:-
 const corsOptions = {
-    origin: "http://localhost:5173", // Only allow your frontend app
+    origin: "http://localhost:5173",
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: ["Content-Type", "x-api-key"]
 };
@@ -37,7 +37,6 @@ const collection = db.collection('passwords');
 // Api - Read all the passwords:-
 app.get('/', async (req, res) => {
     const apiKey = req.headers['x-api-key']; // Get API key from request header
-    console.log(apiKey) 
 
     if (apiKey !== process.env.API_KEY) {
         return res.status(403).json({ success: false, message: "Access Denied" });
@@ -73,7 +72,8 @@ app.post('/', async (req, res) => {
 
 // Api - Delete a password by id:-
 app.delete('/', async (req, res) => {
-    const id = req.body
+    const { id } = req.body
+    if (!id) return res.status(400).json({ success: false, message: "ID is required" });
 
     try {
         const deletedResult = await collection.deleteOne({ _id: new ObjectId(id) });
@@ -89,7 +89,8 @@ app.put("/", async (req, res) => {
     const { id, site, username, password } = req.body
 
     try {
-        const updatedResult = await collection.updateOne({ _id: new ObjectId(id) }, { $set: { site, username, password } })
+        const encrypt_password = CryptoJS.AES.encrypt(password, key).toString();
+        const updatedResult = await collection.updateOne({ _id: new ObjectId(id) }, { $set: { site, username, password: encrypt_password } })
         res.send({ sucesss: true, result: updatedResult })
     } catch (err) {
         console.error(err)
