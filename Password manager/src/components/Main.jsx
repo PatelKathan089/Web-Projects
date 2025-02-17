@@ -1,8 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import "./main.css";
+
+// Import All Password Services:-
+import {
+  getPasswords,
+  savePassword,
+  deletePassword,
+  editPassword,
+  copyText,
+} from "../services/passService";
 
 function Main() {
   const [passwordArray, setpasswordArray] = useState([]);
@@ -17,141 +26,13 @@ function Main() {
     formState: { errors },
   } = useForm();
 
-  // Retriving the data from the server:-
-  const getPasswords = async () => {
-    let req = await fetch("http://localhost:3000/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": "mysecureapikey123",
-      },
-    });
-    let passwords = await req.json();
-    setpasswordArray(passwords);
-  };
-
+  // Fetch all the passwords from the database:-
   useEffect(() => {
-    getPasswords();
+    getPasswords(setpasswordArray);
   }, []);
 
   const showPassword = () => {
     setIsPasswordVisiable(!isPasswordVisiable);
-  };
-
-  const savePassword = async (data) => {
-    if (data.id) {
-      // Update existing password
-      await fetch("http://localhost:3000/", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: data.id,
-          site: data.site,
-          username: data.username,
-          password: data.password,
-        }),
-      });
-
-      setpasswordArray(
-        passwordArray.map((item) =>
-          item._id === data.id
-            ? {
-                ...item,
-                site: data.site,
-                username: data.username,
-                password: data.password,
-              }
-            : item
-        )
-      );
-      toast.success("Password updated!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
-      });
-      setIsEditing(false);
-    } else {
-      // Save New Password:-
-      await fetch("http://localhost:3000/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data }),
-      });
-
-      await getPasswords(); // This ensures fresh data from the database which also perseve _id
-      toast.success("Password saved!", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Slide,
-      });
-    }
-
-    reset(); // Clear form fields after submission
-    getPasswords(); // Refresh the data from the server
-  };
-
-  const copyText = (text) => {
-    navigator.clipboard.writeText(text);
-    toast.success("Copied to clipboard!", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Slide,
-    });
-  };
-
-  const editText = (id) => {
-    setIsEditing(true);
-    const passwordToEdit = passwordArray.find((item) => item._id === id);
-
-    if (!passwordToEdit) {
-      toast.error("Error: Password not found!");
-      return;
-    }
-    // Populate the form fields with existing data:-
-    setValue("site", passwordToEdit.site);
-    setValue("username", passwordToEdit.username);
-    setValue("password", passwordToEdit.password);
-    setValue("id", passwordToEdit._id);
-  };
-
-  const deleteText = async (id) => {
-    setpasswordArray(passwordArray.filter((item) => item._id !== id));
-
-    await fetch("http://localhost:3000/", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: id.toString() }),
-    });
-
-    toast.success("Password deleted!", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Slide,
-    });
   };
 
   return (
@@ -174,7 +55,9 @@ function Main() {
         </div>
         <div className="editWindow mt-4">
           <form
-            onSubmit={handleSubmit(savePassword)}
+            onSubmit={handleSubmit((data) =>
+              savePassword(data, setpasswordArray, setIsEditing, reset, toast)
+            )}
             className="p-3 flex flex-col items-center justify-center gap-4"
           >
             <div className="url w-[80%]">
@@ -257,6 +140,7 @@ function Main() {
             </div>
           </form>
         </div>
+
         <div className="password_window flex flex-col justify-center items-center p-3">
           <h2 className="font-bold text-lg w-[80%]">Your Passwords</h2>
           {passwordArray.length === 0 ? (
@@ -283,7 +167,7 @@ function Main() {
                           <img
                             src="imgs/copy.svg"
                             onClick={() => {
-                              copyText(item.site);
+                              copyText(item.site, toast);
                             }}
                             className="cursor-pointer"
                             alt="copy"
@@ -296,7 +180,7 @@ function Main() {
                           <img
                             src="imgs/copy.svg"
                             onClick={() => {
-                              copyText(item.username);
+                              copyText(item.username, toast);
                             }}
                             className="cursor-pointer"
                             alt="copy"
@@ -309,7 +193,7 @@ function Main() {
                           <img
                             src="imgs/copy.svg"
                             onClick={() => {
-                              copyText(item.password);
+                              copyText(item.password, toast);
                             }}
                             className="cursor-pointer"
                             alt="copy"
@@ -320,7 +204,13 @@ function Main() {
                         <div className="flex justify-center items-center gap-2">
                           <img
                             onClick={() => {
-                              editText(item._id);
+                              editPassword(
+                                item._id,
+                                passwordArray,
+                                setIsEditing,
+                                setValue,
+                                toast
+                              );
                             }}
                             src="imgs/edit.svg"
                             className="cursor-pointer"
@@ -328,7 +218,7 @@ function Main() {
                           />
                           <img
                             onClick={() => {
-                              deleteText(item._id);
+                              deletePassword(item._id, setpasswordArray, toast);
                             }}
                             src="imgs/delete.svg"
                             className="cursor-pointer"
