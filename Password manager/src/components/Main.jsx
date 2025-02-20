@@ -1,5 +1,5 @@
-import React, { useState, useEffect, createContext } from "react";
-import { Slide, ToastContainer, toast } from "react-toastify";
+import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import "./main.css";
@@ -67,10 +67,6 @@ function Main() {
                     value: true,
                     message: "Website URL is required!",
                   },
-                  pattern: {
-                    value: /^(https?:\/\/)?([\w\d-]+\.)+[\w\d]{2,}\/+$/,
-                    message: "Plz enter valid URL!",
-                  },
                 })}
                 placeholder="Enter Website URL"
                 className="w-full p-1 rounded-full pl-4 border border-green-400 outline-2 outline-green-600"
@@ -114,7 +110,9 @@ function Main() {
                 <span onClick={showPassword}>
                   <img
                     src={
-                      isPasswordVisiable ? "imgs/closeeye.svg" : "imgs/eye.svg"
+                      isPasswordVisiable
+                        ? "src/assets/imgs/closeeye.svg"
+                        : "src/assets/imgs/eye.svg"
                     }
                     className="absolute right-[8px] bottom-[8px] cursor-pointer"
                     alt="view"
@@ -131,7 +129,11 @@ function Main() {
                 className="flex items-center gap-1 bg-green-400 p-2 px-4 rounded-full hover:bg-green-500"
               >
                 <img
-                  src="imgs/save_btn.svg"
+                  src={
+                    isEditing
+                      ? "src/assets/imgs/update.svg"
+                      : "src/assets/imgs/save_btn.svg"
+                  }
                   alt="save_ico"
                   className="invert"
                 />
@@ -165,7 +167,7 @@ function Main() {
                             {item.site}
                           </a>
                           <img
-                            src="imgs/copy.svg"
+                            src="src/assets/imgs/copy.svg"
                             onClick={() => {
                               copyText(item.site, toast);
                             }}
@@ -178,7 +180,7 @@ function Main() {
                         <div className="flex justify-center items-center gap-1">
                           <span>{item.username}</span>
                           <img
-                            src="imgs/copy.svg"
+                            src="src/assets/imgs/copy.svg"
                             onClick={() => {
                               copyText(item.username, toast);
                             }}
@@ -191,7 +193,7 @@ function Main() {
                         <div className="flex justify-center items-center gap-1">
                           <span>{"*".repeat(item.password.length)}</span>
                           <img
-                            src="imgs/copy.svg"
+                            src="src/assets/imgs/copy.svg"
                             onClick={() => {
                               copyText(item.password, toast);
                             }}
@@ -212,7 +214,7 @@ function Main() {
                                 toast
                               );
                             }}
-                            src="imgs/edit.svg"
+                            src="src/assets/imgs/edit.svg"
                             className="cursor-pointer"
                             alt="edit"
                           />
@@ -220,7 +222,7 @@ function Main() {
                             onClick={() => {
                               deletePassword(item._id, setpasswordArray, toast);
                             }}
-                            src="imgs/delete.svg"
+                            src="src/assets/imgs/delete.svg"
                             className="cursor-pointer"
                             alt="delete"
                           />

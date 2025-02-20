@@ -20,7 +20,7 @@ function Header() {
               }}
               className="flex items-center gap-1 border-2 rounded-full bg-green-600"
             >
-              <img src="imgs/github.svg" alt="github_logo" className="invert" />
+              <img src="src/assets/imgs/github.svg" alt="github_logo" className="invert" />
               <span className="mx-1">GitHub</span>
             </button>
           </div>
