@@ -14,7 +14,7 @@ const key = process.env.SECRET_KEY;
 
 // Cores Option for allowing access to fronted only:-
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: "*",
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: ["Content-Type", "x-api-key"]
 };
@@ -98,6 +98,6 @@ app.put("/", async (req, res) => {
     }
 })
 
-app.listen(port, () => {
-    console.log(`Your server is currently running on http://localhost:${port}`)
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Your server is currently running on http://192.168.1.8:${port}`)
 })

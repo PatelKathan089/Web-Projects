@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/';
+const API_URL = 'http://192.168.1.8:3000/';
 const API_KEY = 'mysecureapikey123';
 
 // Retriving the data from the server:-
