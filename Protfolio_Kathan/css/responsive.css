@@ -1,0 +1,471 @@
+@media only screen and (min-width: 450px) {
+
+  /*----------------------- Header Section -----------------------------------------*/
+  .header .menu {
+    display: none;
+  }
+
+  .logo {
+    margin-left: 20px;
+  }
+
+  .nav_links {
+    display: block;
+  }
+
+  .nav_links nav {
+    padding: 5px;
+    margin-right: 20px;
+  }
+
+  .nav_links nav ul {
+    display: flex;
+    gap: 15px;
+    list-style-type: none;
+  }
+
+  .nav_links nav ul li a {
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  .nav_links nav ul li a:hover {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  /*------------------------------------------------------------------------------*/
+
+  /*----------------------- Main Section -----------------------------------------*/
+
+  .m_section {
+    display: none;
+  }
+
+  .d_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .heading {
+    font-size: 36px;
+    font-weight: bolder;
+    font-family: "Roboto Condensed", sans-serif;
+  }
+
+  .profile {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 30px;
+    border-radius: 0%;
+    margin: 0;
+  }
+
+  .reverse {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .profile_img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+  }
+
+  .profile_img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .profile_desc p {
+    font-size: 20px;
+  }
+
+  .btns {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 5px;
+  }
+
+  .social_btn a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+  }
+
+  .resume_btn {
+    height: 40px;
+  }
+
+  .d_separation {
+    display: block;
+    height: 5px;
+    background-color: #475569;
+  }
+
+  .m_separation {
+    display: none;
+  }
+
+  .m_about {
+    display: none;
+  }
+
+  .d_about .profile {
+    flex-direction: row-reverse;
+  }
+
+  .profile_desc2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .profile_desc2 p {
+    font-size: 20px;
+  }
+
+  .toggle_read {
+    height: 40px;
+    transform: translate(0, -50%);
+  }
+
+  .m_skills {
+    display: none;
+  }
+
+  .card {
+    display: flex;
+    position: static;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    font-size: 24px;
+    border-radius: 10px;
+    background-color: var(--bg-card);
+    box-shadow: 3px 3px 10px red, -3px -3px 10px blue;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    transform: perspective(100px) translate3d(0px, 0px, 5px);
+    transition: all 1s ease;
+  }
+
+  .skills {
+    width: 100%;
+    display: flex;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .skill_desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .skill_desc>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .range {
+    position: relative;
+    width: 250px;
+    height: 5px;
+    border-radius: 20px;
+    background-color: #e2e8f0;
+  }
+
+  .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90%;
+    height: 100%;
+    border-radius: 20px;
+    background-color: #312e81;
+  }
+
+  .tailwind .range .progress {
+    width: 80%;
+  }
+
+  .js .range .progress,
+  .react .range .progress {
+    width: 70%;
+  }
+
+  .java .range .progress,
+  .node .range .progress {
+    width: 70%;
+  }
+
+  .express .range .progress,
+  .mongoDB .range .progress {
+    width: 60%;
+  }
+
+  .git .range .progress {
+    width: 50%;
+  }
+
+  .skill_img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .i_skill_img {
+    font-size: 40px;
+  }
+
+  .m_certificates {
+    display: none;
+  }
+
+  .certi_cards {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .certi_cards .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .certi_card {
+    min-width: 0%;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    background-color: var(--bg-card);
+    border-radius: 20px;
+  }
+
+  .m_projects {
+    display: none;
+  }
+
+  .project-box {
+    flex-direction: column;
+    flex-shrink: 1;
+  }
+
+  .project-box .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .project {
+    min-width: 0%;
+  }
+
+  .m_contact {
+    display: none;
+  }
+
+  .contact_form {
+    width: 80%;
+    padding: 10px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .light_mode .contact_form {
+    border: none;
+    box-shadow: none;
+  }
+
+  .contact_form form {
+    width: 100%;
+    padding: 0px 10px 10px 10px;
+  }
+
+  .contact_form form fieldset {
+    height: 100%;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid gold;
+    box-shadow: 1px 1px 5px gold;
+  }
+
+  .light_mode .contact_form form fieldset {
+    border: 1px solid black;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .contact_form form fieldset legend {
+    margin: 0px 5px;
+    padding: 0px 5px;
+    font-weight: bold;
+    font-size: 20px;
+    color: gold;
+  }
+
+  .light_mode .contact_form form fieldset legend {
+    color: black;
+  }
+
+  .t_row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .t_row .i_row {
+    width: 50%;
+  }
+
+  .t_row .i_row input {
+    width: 100%;
+    border: none;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+  }
+
+  .i_row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0px;
+  }
+
+  .i_row textarea {
+    width: 100%;
+    background-color: var(--bg-primary);
+    color: white;
+    border: none;
+    margin-top: 0;
+  }
+
+  .form_input {
+    padding: 10px 20px;
+    border-radius: 10px;
+  }
+
+  .name {
+    margin: 0px 0px 0px 20px;
+  }
+
+  .email {
+    margin: 0px 2px 0px 0px;
+  }
+
+  .submit_btn {
+    display: flex;
+    margin-top: 0;
+    border-radius: 5px;
+    padding: 5px 15px;
+    align-self: center;
+    justify-self: center;
+    cursor: pointer;
+  }
+
+  /*------------------------------------------------------------------------------*/
+}
+
+@media only screen and (min-width: 500px) and (max-width: 800px) {
+  .profile_desc p {
+    font-size: 15px;
+  }
+
+  .profile_desc2 p {
+    font-size: 15px;
+  }
+
+  .skills {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .skills .card {
+    width: 100%;
+    padding: 5px;
+    font-size: 20px;
+    transform: scale(0.9);
+  }
+
+  .certi_card h3 {
+    font-size: 16px;
+  }
+
+  .certi_card p {
+    font-size: 13px;
+  }
+
+  .project h3 {
+    font-size: 16px;
+  }
+
+  .project:hover::after {
+    font-size: 9px;
+  }
+
+  .contact_form {
+    width: 100%;
+  }
+
+  .t_row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .t_row .i_row {
+    width: 100%;
+  }
+
+  .t_row .i_row input {
+    width: 100%;
+    border: none;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+  }
+
+  .email {
+    margin-left: 23px;
+  }
+}

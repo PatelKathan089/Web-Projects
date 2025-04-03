@@ -1,0 +1,975 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Theme */
+.light_mode {
+  --bg-primary: #deb887;
+  --bg-secondary: #fff8dc;
+  --bg-card: #d2de8773;
+  --text-primary: #000000;
+}
+
+.dark_mode {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #0f172a;
+  --text-primary: #e2e8f0;
+}
+
+.invert {
+  filter: invert(1);
+}
+
+/* --------------------------- Header Section -------------------------------------------- */
+
+.header {
+  width: 100vw;
+  height: 6vh;
+  padding: 5px 10px;
+  background-color: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.menu {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo_img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  filter: invert(1);
+}
+
+.toggle-switch {
+  display: flex;
+  position: relative;
+  width: 60px;
+  height: 30px;
+  border-radius: 30px;
+  align-items: center;
+  background-color: white;
+}
+
+.toggle-switch button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.toggle-switch button img {
+  width: 100%;
+  height: 100%;
+  filter: invert(1);
+}
+
+.btn_dark {
+  position: absolute;
+  left: 0;
+}
+
+.navbar {
+  width: 50%;
+  height: calc(100vh - 6vh - 6vh);
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  top: 42px;
+  background-color: var(--bg-secondary);
+  transform: translate(-100%, 0%);
+  transition: all 0.5s ease;
+  z-index: 2;
+  padding: 10px 15px;
+}
+
+.menu:hover .navbar {
+  transform: translate(0%, 0%);
+}
+
+.nav-list {
+  width: 100%;
+  height: 100%;
+  padding: 10px 5px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.nav-list li a {
+  font-size: 24px;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.nav-list li a:hover {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.nav_links {
+  display: none;
+}
+
+/* ------------------------------------------------------------------------------------- */
+
+/* --------------------------- Main Section -------------------------------------------- */
+
+.container {
+  width: 100%;
+  height: calc(100vh - 6vh - 6vh);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  overflow-y: auto;
+}
+
+/* --------------------------- Home Section ------------------------------------------ */
+
+.d_section {
+  display: none;
+}
+
+.m_section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+}
+
+h1 {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 36px;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.head p {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-top: 15px;
+}
+
+.profile_img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+}
+
+.btns {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.social_btn {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.light_mode .social_btn {
+  filter: invert(1);
+}
+
+.light_mode .github:hover,
+.light_mode .discord:hover,
+.light_mode .linkedin:hover,
+.light_mode .whatsapp:hover {
+  filter: invert(1);
+}
+
+.social_btn a {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+}
+
+.social_btn a img {
+  width: 100%;
+  height: 100%;
+}
+
+.github,
+.whatsapp,
+.discord {
+  border-radius: 50%;
+}
+
+.github:hover,
+.discord:hover {
+  background-color: #0098cc;
+  box-shadow: 3px 3px 15px #0098cc, -3px -3px 15px #0098cc;
+  transform: perspective(20px) translate3d(0, 0px, 4px);
+  transition: transform 0.5s ease;
+}
+
+.linkedin:hover {
+  border-radius: 5px;
+  background-color: #2100ff;
+  box-shadow: 3px 3px 15px #2100ff, -3px -3px 15px #2100ff;
+  transform: perspective(20px) translate3d(0, 0px, 4px);
+  transition: transform 0.5s ease;
+}
+
+.whatsapp:hover {
+  background-color: #00cc2a;
+  box-shadow: 3px 3px 15px #00cc2a, -3px -3px 15px #00cc2a;
+  transform: perspective(20px) translate3d(0, 0px, 4px);
+  transition: transform 0.5s ease;
+}
+
+.resume_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--bg-primary);
+  padding: 5px 15px;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 25px;
+}
+
+.light_mode .resume_btn {
+  color: var(--text-primary);
+}
+
+.light_mode .resume_btn::before {
+  background-color: var(--bg-primary);
+}
+
+
+.resume_btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  border-radius: 25px;
+  background-color: white;
+}
+
+.resume_btn:hover:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  transform: translate(-4px, -4px);
+  z-index: -2;
+  border-radius: 25px;
+  background-image: linear-gradient(45deg,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet);
+  animation: glowing 1s infinite linear;
+}
+
+/* ------------------------------------------------------------------------------------- */
+
+.m_separation {
+  height: 5px;
+  background-color: #475569;
+}
+
+.d_separation {
+  display: none;
+}
+
+/* --------------------------- About Section ------------------------------------------ */
+
+.d_about {
+  display: none;
+}
+
+.a_profile_sec {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.a_profile {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.a_profile img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.extra_txt {
+  display: none;
+}
+
+.toggle_read {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--bg-primary);
+  padding: 5px 15px;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 25px;
+}
+
+.light_mode .toggle_read {
+  color: var(--text-primary);
+}
+
+.light_mode .toggle_read::before {
+  background-color: var(--bg-primary);
+}
+
+.toggle_read::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  border-radius: 25px;
+  background-color: white;
+}
+
+.toggle_read:hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  transform: translate(-4px, -4px);
+  z-index: -2;
+  border-radius: 25px;
+  background-image: linear-gradient(45deg,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet);
+  animation: glowing 1s infinite linear;
+}
+
+
+/* ------------------------------------------------------------------------------------- */
+
+/* --------------------------- Skill Section ------------------------------------------ */
+
+.d_skills {
+  display: none;
+}
+
+.skills {
+  width: 100%;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: var(--bg-card);
+  box-shadow: 3px 3px 10px red, -3px -3px 10px blue;
+  cursor: pointer;
+}
+
+.light_mode .card {
+  background-image: linear-gradient(45deg,var(--bg-primary),var(--bg-card));
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+#card1 {
+  animation: fade_in-out1 10s infinite linear;
+}
+
+#card2 {
+  animation: fade_in-out2 10s infinite linear;
+}
+
+.skill_desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 5px;
+}
+
+.skill_desc>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.range {
+  position: relative;
+  width: 250px;
+  height: 5px;
+  border-radius: 20px;
+  background-color: #e2e8f0;
+}
+
+.progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 90%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: #312e81;
+}
+
+.tailwind .range .progress {
+  width: 80%;
+}
+
+.js .range .progress,
+.react .range .progress {
+  width: 70%;
+}
+
+.java .range .progress,
+.node .range .progress {
+  width: 70%;
+}
+
+.express .range .progress,
+.mongoDB .range .progress {
+  width: 60%;
+}
+
+.git .range .progress {
+  width: 50%;
+}
+
+.skill_img {
+  width: 40px;
+  height: 40px;
+}
+
+.i_skill_img {
+  font-size: 40px;
+}
+
+/* --------------------------- Certificates Section -------------------------------------------- */
+
+.d_certificates {
+  display: none;
+}
+
+.slide_container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.certi_cards {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: row;
+  padding: 15px;
+  gap: 20px;
+}
+
+.certi_card {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  background-color: var(--bg-card);
+  border-radius: 20px;
+}
+
+.light_mode .certi_card {
+  background-image: linear-gradient(180deg,var(--bg-primary),var(--bg-card));
+}
+
+.certi_card h3 {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.certi_card p {
+  text-align: center;
+  font-size: 15px;
+}
+
+.certi_card a {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--bg-primary);
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 0;
+}
+
+.certi_btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.light_mode .certi_btn {
+  color: var(--text-primary);
+}
+
+.light_mode .certi_btn::before {
+  background-color: var(--bg-primary);
+}
+
+.certi_btn:hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  transform: translate(-4px, -4px);
+  z-index: -2;
+  border-radius: 5px;
+  background-image: linear-gradient(45deg,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet);
+  animation: glowing 1s infinite linear;
+}
+
+/* ------------------------------------------------------------------------------------- */
+
+/* --------------------------- Projects Section ------------------------------------------ */
+
+.d_projects {
+  display: none;
+}
+
+.project-box {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: row;
+  gap: 10px;
+  padding: 10px;
+}
+
+.project {
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: var(--bg-card);
+  position: relative;
+}
+
+.light_mode .project {
+  background-image: linear-gradient(180deg,var(--bg-primary),var(--bg-card));
+}
+
+.project:nth-child(1):hover::after {
+  content: "Built a secure password management app using MERN stack (MongoDB, Express.js, React.js, Node.js).Designed a user-friendly dashboard, allowing users to add, delete, and edit credentials efficiently.Implemented data encryption and private API to enhance security.";
+}
+
+.project:nth-child(2):hover::after {
+  content: "Developed a responsive music player with a dynamic playlist feature using HTML, CSS, and JavaScript.Created an interactive UI with a custom seek bar and real-time audio controls.Implemented media queries for cross-device compatibility, improving user experience, passionate about creating innovative solutions to real-world problems.";
+}
+
+.project:nth-child(3):hover::after {
+  content: "Built a responsive calculator app using React.js and tailwind css for a custom logic for arithmetic operations, including addition, subtraction, multiplication, and division.Used React hooks to manage state and update the UI dynamically, and react-router api for handeling different routes, ensuring a seamless user experience.";
+}
+
+.project:nth-child(4):hover::after {
+  content: "Built a Netflix app ui by using pure html and css.Used flexbox for layout design and css grid for grid layout design.Implemented a responsive design for cross-device compatibility, ensuring a seamless user experience.";
+}
+
+.project:nth-child(5):hover::after {
+  content: "Built a band templete using html,css and bootstrap.Used bootstrap for layout design and css grid for grid layout design.Implemented a responsive design for cross-device compatibility, ensuring a seamless user experience.";
+}
+
+.project:nth-child(6):hover::after {
+  content: "Built a Todo app using react.js and tailwind css for a custom logic for adding, deleting and updating tasks.Used React hooks to manage state and update the UI dynamically, and react-router api for handeling different routes, ensuring a seamless user experience.";
+}
+
+.project:hover::after {
+  content: "";
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--bg-primary);
+  opacity: 70%;
+  border-radius: 15px;
+  animation: up_slide 1s ease forwards;
+}
+
+.project img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.project_btn {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--bg-primary);
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 1;
+}
+
+.light_mode .project_btn {
+  color: var(--text-primary);
+}
+
+.project_btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.light_mode .project_btn::before {
+  background-color: var(--bg-primary);
+}
+
+.project_btn:hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  transform: translate(-4px, -4px);
+  z-index: -2;
+  border-radius: 5px;
+  background-image: linear-gradient(45deg,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet);
+  animation: glowing 1s infinite linear;
+}
+
+/* ------------------------------------------------------------------------------------- */
+
+/* --------------------------- Contact Section ------------------------------------------ */
+.d_contact {
+  display: none;
+}
+
+.contact_form {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid gold;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px gold;
+}
+
+.light_mode .contact_form {
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.contact_form form {
+  padding: 5px 10px;
+}
+
+.t_row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.t_row .i_row {
+  width: 100%;
+}
+
+.t_row .i_row input {
+  width: 100%;
+  border: none;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+}
+
+.light_mode .t_row .i_row input {
+  background-color: var(--bg-card);
+}
+
+.i_row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.i_row textarea {
+  width: 100%;
+  margin-top: 10px;
+  background-color: var(--bg-primary);
+  color: white;
+  border: none;
+}
+
+.light_mode .i_row textarea {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.form_input {
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.file {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.file input {
+  padding: 5px;
+}
+
+.submit_btn {
+  display: flex;
+  border: none;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 3px 15px;
+  align-self: center;
+  justify-self: center;
+  cursor: pointer;
+  border: 2px solid var(--text-primary);
+}
+
+.submit_btn:hover {
+  outline: 2px solid gold;
+  background: rgba(255, 217, 0, 0.5);
+  color: white;
+  box-shadow: 2px 2px 10px gold, -2px -2px 10px gold;
+}
+
+.light_mode .submit_btn:hover {
+  outline: 2px solid var(--bg-primary);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 2px 2px 10px var(--bg-primary), -2px -2px 10px var(--bg-primary);
+}
+
+/* ------------------------------------------------------------------------------------- */
+
+/* --------------------------- Footer Section ------------------------------------------ */
+
+.footer {
+  width: 100vw;
+  height: 6vh;
+  padding: 5px;
+  background-color: var(--bg-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.f_btn {
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.f_btn:hover {
+  transition: all 0.5s ease-out;
+  transform: perspective(30px) translate3d(-3px, -3px, 5px);
+}
+
+.f_btn:nth-child(1) {
+  background-color: rgba(0, 0, 255, 0.5);
+}
+
+.f_btn:nth-child(2) {
+  background-color: rgba(0, 255, 255, 0.5);
+}
+
+.f_btn:nth-child(1):hover .btn_img {
+  border-radius: 50%;
+  box-shadow: 1px 1px 15px blue, -1px -1px 15px blue;
+}
+
+.f_btn:nth-child(2):hover .btn_img {
+  border-radius: 50%;
+  box-shadow: 1px 1px 15px cyan, -1px -1px 15px cyan;
+}
+
+/* ------------------------------------------------------------------------------------- */
+
+/* --------------------------- Animation Keyframes ------------------------------------- */
+
+@keyframes glowing {
+  from {
+    background-position-x: 0px;
+  }
+
+  to {
+    background-position-x: 170px;
+  }
+}
+
+@keyframes up_slide {
+  from {
+    height: 0%;
+  }
+
+  to {
+    height: 100%;
+  }
+}
+
+@keyframes fade_in-out1 {
+
+  0%,
+  50% {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  50.01%,
+  100% {
+    opacity: 0;
+    z-index: 0;
+  }
+}
+
+@keyframes fade_in-out2 {
+
+  0%,
+  50% {
+    opacity: 0;
+    z-index: 0;
+  }
+
+  50.01%,
+  100% {
+    opacity: 1;
+    z-index: 1;
+  }
+}
+
+/* ------------------------------------------------------------------------------------- */
