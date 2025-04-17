@@ -69,5 +69,5 @@ This project is licensed under the **MIT License.
 
 ### **Github Link:**
 
-[Github Project's Link]()
+[Github Project's Link](https://github.com/PatelKathan089/Web-Projects/tree/master/studentRegistration_system)
 
