@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Forecast App</title>
+    <link rel="shortcut icon" href="src/assets/imgs/weather_favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="src/output.css" />
+    <script defer src="script.js"></script>
+    <script src="https://kit.fontawesome.com/a879116811.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="wrapper w-screen h-screen">
+        <header class="flex items-center w-full h-[6%] bg-slate-950 text-slate-50">
+            <nav class="flex items-center justify-center gap-10 sm:gap-52 w-full py-0.5 px-1.5">
+                <div class="logo">
+                    <h1 class="sm:text-lg drop-shadow-[1px_1px_1px_#fff]">Weather Forecast</h1>
+                </div>
+                <div>
+                    <button id="github_btn" type="button" title="Visit GitHub"
+                        class="cursor-pointer flex items-center gap-1 rounded-2xl bg-slate-200 text-slate-900 pl-1 pr-2 py-0.5 hover:outline-2 hover:bg-slate-100 outline-blue-500">
+                        <i class="fa-brands fa-lg fa-github"></i>
+                        <span>GitHub</span>
+                    </button>
+                </div>
+            </nav>
+        </header>
+        <main class="flex flex-col w-full h-[94%] lg:flex-row text-slate-50">
+            <section class="lg:w-[25%] lg:h-full w-full h-[26%] flex flex-col gap-1.5 bg-slate-800">
+                <h2 class="text-center text-lg lg:text-base font-bold mt-0.5">Select options for weather information
+                </h2>
+                <div class="radio_btns flex items-center justify-center gap-4 mt-1.5">
+                    <div class="flex items-center gap-1">
+                        <input type="radio" name="location" id="city" title="Select city" class="cursor-pointer" />
+                        <label for="city" class="cursor-pointer">City</label>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <input checked type="radio" name="location" id="current_location"
+                            title="Select your current location" class="cursor-pointer" />
+                        <label for="current_location" class="cursor-pointer">Current Location</label>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center justify-center relative">
+                    <input type="search" placeholder="Enter city name" id="city_input"
+                        class="w-[90%] px-2 py-1.5 rounded-md bg-slate-50 text-slate-900 outline-2 focus:outline-blue-700" />
+                    <div id="dropdown"
+                        class="hidden absolute top-10 left-5 w-[90%] px-2 py-1.5 rounded-md bg-slate-50 text-slate-900">
+                        <ul id="dropdown_cities">
+                        </ul>
+                    </div>
+                </div>
+                <div class="search self-center">
+                    <button id="search" type="button" title="Search weather"
+                        class="py-1 px-2 bg-slate-300 text-slate-800 mt-4 rounded hover:bg-slate-200 hover:outline-2 cursor-pointer">Search</button>
+                </div>
+            </section>
+            <section class="lg:w-[75%] lg:h-full w-full h-[68%] bg-slate-600">
+                <div
+                    class="flex items-center justify-between p-1 pl-2 mt-2 mx-1 lg:py-2 lg:px-4 lg:mt-2.5 lg:mx-8 bg-slate-200 text-slate-900 rounded-lg shadow-lg shadow-black">
+                    <!-- Data will be displayed dynamically here -->
+                    <div class="information">
+                        <h3 id="city_name" class="text-xl font-bold mb-2.5"></h3>
+                        <p id="temp" class="font-semibold"></p>
+                        <p id="wind" class="font-semibold"></p>
+                        <p id="humidity" class="font-semibold"></p>
+                    </div>
+                    <div class="img">
+                        <img id="weather_img" src="" alt="" width="100" height="100" />
+                        <p id="weather_description" class="text-center"></p>
+                    </div>
+                </div>
+                <div class="flex flex-col mt-2.5 mx-1.5 gap-1.5 lg:mt-8 lg:gap-2.5 lg:mx-9">
+                    <h3 class="text-xl font-bold">7-Days Forecast</h3>
+                    <div id="card_container" class="flex items-center gap-2.5 overflow-auto lg:gap-5">
+                        <!-- dynamically generated cards will be displayed here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
