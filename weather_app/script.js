@@ -88,7 +88,7 @@ const getWeatherByCityName = async (city = "ahmedabad") => {
         temp.innerHTML = `Temperature: <span class="font-normal">${data.current.temp_c}<sup>o</sup> C</span>`;
         wind.innerHTML = `Wind: <span class="font-normal">${data.current.wind_kph} kmph</span>`;
         humidity.innerHTML = `Humidity: <span class="font-normal">${data.current.humidity}%</span>`;
-        weatherImg.src = data.current.condition.icon;
+        weatherImg.src = `https:${data.current.condition.icon}`;
         weatherImg.alt = data.current.condition.text;
         weatherDescription.innerHTML = data.current.condition.text;
 
@@ -98,7 +98,7 @@ const getWeatherByCityName = async (city = "ahmedabad") => {
             return (
                 cardContainer.innerHTML += `<div class="w-full flex flex-col items-center justify-center gap-1 bg-slate-200 text-slate-900 rounded-lg py-2 px-4 shadow-lg shadow-black">
                         <h4 class="font-bold">(${item.date})</h4>
-                        <img src=${item.day.condition.icon} alt="${item.day.condition.text}" width="70" height="70" />
+                        <img src="https:${item.day.condition.icon}" alt="${item.day.condition.text}" width="70" height="70" />
                         <p class="self-start font-semibold">Temp:<span class="text-sm ml-1 font-normal">${item.day.avgtemp_c}<sup>o</sup> C</span></p>
                         <p class="self-start font-semibold">Wind:<span class="text-sm ml-1 font-normal">${item.day.maxwind_kph} kph</span></p>
                         <p class="self-start font-semibold">Humidity:<span class="text-sm ml-1 font-normal">${item.day.avghumidity}%</span></p>
@@ -128,7 +128,7 @@ const getWeatherByCurrentLocation = async (latitude, longitude) => {
         temp.innerHTML = `Temperature: <span class="font-normal">${data.current.temp_c}<sup>o</sup> C</span>`;
         wind.innerHTML = `Wind: <span class="font-normal">${data.current.wind_kph} kmph</span>`;
         humidity.innerHTML = `Humidity: <span class="font-normal">${data.current.humidity}%</span>`;
-        weatherImg.src = data.current.condition.icon;
+        weatherImg.src = `https:${data.current.condition.icon}`;
         weatherImg.alt = data.current.condition.text;
         weatherDescription.innerHTML = data.current.condition.text;
 
@@ -138,7 +138,7 @@ const getWeatherByCurrentLocation = async (latitude, longitude) => {
             return (
                 cardContainer.innerHTML += `<div class="w-full flex flex-col items-center justify-center gap-1 bg-slate-200 text-slate-900 rounded-lg py-2 px-4 shadow-lg shadow-black">
                         <h4 class="font-bold">(${item.date})</h4>
-                        <img src=${item.day.condition.icon} alt="${item.day.condition.text}" width="70" height="70" />
+                        <img src="https:${item.day.condition.icon}" alt="${item.day.condition.text}" width="70" height="70" />
                         <p class="self-start font-semibold">Temp:<span class="text-sm ml-1 font-normal">${item.day.avgtemp_c}<sup>o</sup> C</span></p>
                         <p class="self-start font-semibold">Wind:<span class="text-sm ml-1 font-normal">${item.day.maxwind_kph} kph</span></p>
                         <p class="self-start font-semibold">Humidity:<span class="text-sm ml-1 font-normal">${item.day.avghumidity}%</span></p>
