@@ -61,7 +61,7 @@ Contributions are welcome! Please open an issue or submit a pull request for imp
 
 ## Github Link
 
-(https://github.com/PatelKathan089/Web-Projects/tree/master/todoApp)[https://github.com/PatelKathan089/Web-Projects/tree/master/todoApp]
+[https://github.com/PatelKathan089/Web-Projects/tree/master/todoApp](https://github.com/PatelKathan089/Web-Projects/tree/master/todoApp)
 
 ## License
 
