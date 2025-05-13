@@ -26,22 +26,12 @@ function Header() {
             </li>
             <li>
               <NavLink
-                to={`/product-details/1`}
+                to={`/product/1`}
                 className={({ isActive }) => {
                   return isActive ? "font-bold underline" : "";
                 }}
               >
                 Product-Details
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/checkout"
-                className={({ isActive }) => {
-                  return isActive ? "font-bold underline" : "";
-                }}
-              >
-                Checkout
               </NavLink>
             </li>
           </ul>

@@ -8,6 +8,7 @@ import Spinner from "./components/Spinner";
 // lazy loading components for performance optimization:-
 const ProductDetails = lazy(() => import("./components/ProductDetails"));
 const Cart = lazy(() => import("./components/Cart"));
+const Checkout = lazy(() => import("./components/Checkout"));
 const NotFound = lazy(() => import("./components/NotFound"));
 
 function App() {
@@ -17,10 +18,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
-          path="/product-details/:id"
+          path="/product/:id"
           element={
             <Suspense fallback={<Spinner />}>
               <ProductDetails />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <Suspense fallback={<Spinner />}>
+              <Checkout />
             </Suspense>
           }
         />
@@ -41,7 +50,7 @@ function App() {
           }
         />
       </Routes>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} />
     </>
   );
 }
