@@ -1,6 +1,7 @@
 import Star from "./Star";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
+import { toast } from "react-toastify";
 
 function ProductItem({ product }) {
   const mrp = product.price;
@@ -8,10 +9,19 @@ function ProductItem({ product }) {
     mrp * (1 - product.discountPercentage / 100)
   );
 
+  const cart = useSelector((state) => state.cart.cart_items);
   const dispatch = useDispatch();
 
   const handleAddCart = (product) => {
-    dispatch(addToCart(product));
+    const e_product = cart.find((item) => {
+      return item.id === product.id;
+    });
+    if (e_product) {
+      toast.info(`Item is already in the cart!`);
+    } else {
+      dispatch(addToCart(product));
+      toast.success(`Item added to your cart`);
+    }
   };
 
   return (

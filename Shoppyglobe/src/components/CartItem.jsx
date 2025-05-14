@@ -1,13 +1,25 @@
 import Star from "./Star";
 import { useDispatch } from "react-redux";
 import { increaseQty, decreaseQty } from "../redux/slices/cartSlice";
+import { toast } from "react-toastify";
 
-function cartItem({ cart_item }) {
+function CartItem({ cart_item }) {
   const dispatch = useDispatch();
   const mrp = cart_item.price;
   const discounted_price = Math.round(
     mrp * (1 - cart_item.discountPercentage / 100)
   );
+
+  const handleRemove = () => {
+    if (cart_item.qty === 1) {
+      toast.error("Item removed from your cart!");
+    }
+    dispatch(decreaseQty(cart_item.id)); // use item.id if item is your prop
+  };
+
+  const handleAdd = () => {
+    dispatch(increaseQty(cart_item.id));
+  };
 
   return (
     <>
@@ -20,9 +32,7 @@ function cartItem({ cart_item }) {
             <div className="w-full flex justify-between h-[25px] rounded-full bg-amber-200">
               <button
                 type="button"
-                onClick={() => {
-                  dispatch(decreaseQty(cart_item.id));
-                }}
+                onClick={handleRemove}
                 className="bg-amber-500 rounded-l-full px-2.5 cursor-pointer hover:bg-amber-600"
               >
                 -
@@ -30,9 +40,7 @@ function cartItem({ cart_item }) {
               <span>{cart_item.qty}</span>
               <button
                 type="button"
-                onClick={() => {
-                  dispatch(increaseQty(cart_item.id));
-                }}
+                onClick={handleAdd}
                 className="bg-amber-500 rounded-r-full px-2.5 cursor-pointer hover:bg-amber-600"
               >
                 +
@@ -68,7 +76,9 @@ function cartItem({ cart_item }) {
           <p className="font-semibold">{cart_item.warrantyInformation}</p>
           <p>
             Price:
-            <span className="font-semibold ml-0.5">${discounted_price * cart_item.qty}</span>
+            <span className="font-semibold ml-0.5">
+              ${discounted_price * cart_item.qty}
+            </span>
           </p>
         </div>
       </div>
@@ -76,4 +86,4 @@ function cartItem({ cart_item }) {
   );
 }
 
-export default cartItem;
+export default CartItem;
