@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { increaseQty, decreaseQty } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
 
-function CartItem({ cart_item }) {
+function CartItem({ cart_item, reFetch }) {
   const dispatch = useDispatch();
   const mrp = cart_item.price;
   const discounted_price = Math.round(
@@ -12,13 +12,61 @@ function CartItem({ cart_item }) {
 
   const handleRemove = () => {
     if (cart_item.qty === 1) {
+      let res = fetch("http://localhost:3000/cart", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          id: cart_item._id,
+          sign: "-",
+        }),
+      });
+      res.then((res) => {
+        if (res.ok) {
+          reFetch(); // Re-fetch the cart items after deletion
+        }
+      });
       toast.error("Item removed from your cart!");
     }
-    dispatch(decreaseQty(cart_item.id)); // use item.id if item is your prop
+    dispatch(decreaseQty(cart_item._id)); // use item.id if item is your prop
+    let res = fetch("http://localhost:3000/cart", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        id: cart_item._id,
+        sign: "-",
+      }),
+    });
+    res.then((res) => {
+      if (res.ok) {
+        reFetch(); // Re-fetch the cart items after decreasing quantity
+      }
+    });
   };
 
   const handleAdd = () => {
-    dispatch(increaseQty(cart_item.id));
+    dispatch(increaseQty(cart_item._id));
+    let res = fetch("http://localhost:3000/cart", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        id: cart_item._id,
+        sign: "+",
+      }),
+    });
+    res.then((res) => {
+      if (res.ok) {
+        reFetch(); // Re-fetch the cart items after increasing quantity
+      }
+    });
   };
 
   return (

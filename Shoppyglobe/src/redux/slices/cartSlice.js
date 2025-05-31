@@ -22,7 +22,7 @@ export const cartSlice = createSlice({
         addToCart: (state, action) => {
             const product = action.payload
             const e_product = state.cart_items.find((item) => {
-                return item.id === product.id
+                return item._id === product._id
             })
             if (e_product) {
                 return;
@@ -33,7 +33,7 @@ export const cartSlice = createSlice({
         },
         increaseQty: (state, action) => {
             const e_product = state.cart_items.find((item) => {
-                return item.id == action.payload;
+                return item._id == action.payload;
             });
             if (e_product) {
                 e_product.qty += 1;
@@ -42,13 +42,13 @@ export const cartSlice = createSlice({
         },
         decreaseQty: (state, action) => {
             const e_product = state.cart_items.find((item) => {
-                return item.id == action.payload;
+                return item._id == action.payload;
             });
             if (e_product.qty > 1) {
                 e_product.qty -= 1;
             } else {
                 state.cart_items = state.cart_items.filter((item) => {
-                    return item.id !== action.payload
+                    return item._id !== action.payload
                 })
             }
             saveData(state.cart_items);

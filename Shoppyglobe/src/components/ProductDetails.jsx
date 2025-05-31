@@ -2,14 +2,16 @@ import { useParams } from "react-router";
 import { useFetch } from "../hooks/useFetch";
 import { useState } from "react";
 import Star from "./Star";
+import Header from "./Header";
 
 function ProductDetails() {
   const [img_index, setImgIndex] = useState(0);
   const { id } = useParams();
 
   const { data, loading, error } = useFetch(
-    `https://dummyjson.com/products/${id}`
+    `http://localhost:3000/products/${id}`
   );
+
   const mrp = data.price;
   const discounted_price = Math.round(
     mrp * (1 - data.discountPercentage / 100)
@@ -20,6 +22,7 @@ function ProductDetails() {
   };
   return (
     <>
+      <Header />
       <div className="m-1.5 flex flex-col md:flex-row shadow shadow-stone-400 items-center md:items-start p-2.5 text-sm md:text-base gap-2.5 rounded-lg">
         <div className="w-[300px] md:w-max rounded bg-stone-50 shadow shadow-slate-500 md:shadow-slate-200 flex flex-col items-center gap-1.5">
           <div className="flex relative rounded w-full h-[250px] md:w-[250px] bg-stone-200">
@@ -103,7 +106,10 @@ function ProductDetails() {
             </span>
           </p>
           <p className="font-semibold">
-            Price:<span className="font-normal ml-1">{discounted_price}</span>
+            Price:
+            <span className="font-normal ml-1">
+              {discounted_price.toString()}
+            </span>
           </p>
           <p className="text-sm font-medium">
             Mrp: <span className="text-slate-400 ml-1 line-through">{mrp}</span>

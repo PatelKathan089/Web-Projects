@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import ProductItem from "./ProductItem";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,7 +6,15 @@ import { searched_items } from "../redux/slices/searchProductSlice";
 import Spinner from "./Spinner";
 
 function ProductList() {
-  const { data, loading, error } = useFetch("https://dummyjson.com/products");
+
+  const { data, loading, error } = useFetch("http://localhost:3000/products", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `JWT ${localStorage.getItem("token")}`,
+    },
+  });
+
   const [products, setProducts] = useState([]); // Local state for all the product list:-
   const [search, setSearch] = useState(""); // Local state for search string:-
   const [toggleSearch, setToggleSearch] = useState(false);
@@ -19,8 +27,8 @@ function ProductList() {
 
   // Using side effect for setting my local products state on change of the fetched data by useFetch hook:-
   useEffect(() => {
-    if (data && data.products) {
-      setProducts(data.products);
+    if (data) {
+      setProducts(data);
     }
   }, [data]);
 
@@ -81,13 +89,13 @@ function ProductList() {
             Search
           </button>
         </div>
-        <div className="w-full flex flex-wrap items-center justify-center gap-2.5 lg:gap-6 xl:gap-10 mt-5 py-2.5">
+        <div className="w-full flex flex-wrap items-center justify-center gap-2.5 lg:gap-6 xl:gap-10 mt-5 py-2.5 perspective-origin-center perspective-normal">
           {toggleSearch
             ? filteredData.map((data) => {
-                return <ProductItem key={data.id} product={data} />;
+                return <ProductItem key={data._id} product={data} />;
               })
             : products.map((product) => {
-                return <ProductItem key={product.id} product={product} />;
+                return <ProductItem key={product._id} product={product} />;
               })}
         </div>
       </div>

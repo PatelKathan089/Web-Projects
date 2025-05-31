@@ -4,6 +4,7 @@ ShoppyGlobe is a responsive e-commerce web application built using React and Red
 
 ## Features
 
+- JWT Authorization
 - Product listing fetched from a public API
 - Search functionality to filter products
 - Add to cart, update quantity, and remove items
@@ -18,8 +19,7 @@ ShoppyGlobe is a responsive e-commerce web application built using React and Red
 
 - **Frontend:** React, Redux, React Router
 - **Styling:** TailwindCSS
-- **Data Source:** [DummyJSON API](https://dummyjson.com/products)
-- **State Management:** Redux
+- **Backend:** Node, Express, MongoDB, JWT
 - **Build Tool:** Vite
 
 ## Folder Structure
@@ -27,7 +27,30 @@ ShoppyGlobe is a responsive e-commerce web application built using React and Red
 ```
 Shoppyglobe/
 │
-├── components/
+├── backend/
+|   |
+│   ├── controller/                     * Routes Controllers 
+│   │   ├── cart.controller.js
+│   │   ├── product.controller.js
+│   │   └── user.controller.js
+│   │
+│   ├── model/                          * Models for the data
+│   |    ├── cart.model.js
+│   |    ├── product.model.js
+│   |    └── user.model.js
+|   |
+|   ├── routes/                         * RESTful API routes
+|   |   ├── cart.routes.js
+|   |   ├── product.routes.js
+|   |   └── user.routes.js
+│   |
+|   ├── .env                            * .env file for secreats
+│   |
+|   ├── package.json                    * Npm package file
+│   |
+|   └── server.js                       * Main server.js file   
+|
+├── components/                         * React components
 │ ├── Header.jsx
 │ ├── ProductList.jsx
 │ ├── ProductItem.jsx
@@ -37,16 +60,17 @@ Shoppyglobe/
 │ ├── NotFound.jsx
 | └── Checkout.jsx
 │
-├── redux/
+├── redux/                              * Redux for state management
 │ ├── actions.js
 │ ├── reducers.js
 │ └── store.js
 │
-├── hooks/
-│ └── useProductList.js
+├── hooks/                              * Custom hooks
+│ └── useFetch.js
 │
-├── App.jsx
-└── main.jsx
+├── App.jsx                             * App component
+|                             
+└── main.jsx                            * Main root file for App
 ```
 
 ## How to Run Locally
@@ -55,20 +79,30 @@ Shoppyglobe/
 
     ```bash
     git clone https://github.com/PatelKathan089/Web-Projects.git
-    ```
+    ```  
 2. Navigate to the project folder:
     ```bash
     cd Web-Projects/online_library_system
     ```
-3. Install dependencies:
+3. Create .env file in your backend
+    ```
+    SECRET_KEY = <Set your 256 bit key>
+    MONGODB_URI = <Set your MongoDB connection string>
+    ```
+4. Install dependencies:
     ```bash
     npm install
     ```
-4. Start the development server:
+5. Start the development server and backend server:
     ```bash
     npm run dev
     ```
-    The app will run on http://localhost:5173.
+    ```bash
+    node --watch server.js
+    ```
+    The app will run on http://localhost:5173/.
+    
+    The app's backend server will run on http://localhost:300/.
 
 ## Github Link
 

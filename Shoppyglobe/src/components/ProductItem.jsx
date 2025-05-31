@@ -2,6 +2,7 @@ import Star from "./Star";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 function ProductItem({ product }) {
   const mrp = product.price;
@@ -9,24 +10,47 @@ function ProductItem({ product }) {
     mrp * (1 - product.discountPercentage / 100)
   );
 
+  const navigate = useNavigate();
+
   const cart = useSelector((state) => state.cart.cart_items);
   const dispatch = useDispatch();
 
+  const handleClick = (e, id) => {
+    // This will exclude the button part when I clicked on card for product-details!
+    if (e.target.closest("button")) {
+      return;
+    }
+    navigate(`/product/${id}`);
+  };
+
   const handleAddCart = (product) => {
     const e_product = cart.find((item) => {
-      return item.id === product.id;
+      return item._id === product._id;
     });
     if (e_product) {
       toast.info(`Item is already in the cart!`);
     } else {
       dispatch(addToCart(product));
+      fetch("http://localhost:3000/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `JWT ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(product),
+      });
       toast.success(`Item added to your cart`);
     }
   };
 
   return (
     <>
-      <div className="flex flex-col gap-1.5 w-[80%] md:w-[30%] xl:w-[20%] rounded shadow shadow-slate-600">
+      <div
+        onClick={(e) => {
+          handleClick(e, product._id);
+        }}
+        className="flex flex-col gap-1.5 w-[80%] md:w-[30%] xl:w-[20%] rounded shadow shadow-slate-600 hover:translate-z-1 hover:translate-0.5 hover:shadow-amber-600 transition-all duration-500 hover:"
+      >
         <div className="w-full h-[200px] bg-stone-100 rounded">
           <img className="w-full h-full" src={product.thumbnail} alt="" />
         </div>

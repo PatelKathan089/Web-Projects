@@ -1,7 +1,7 @@
 {
   "name": "shoppyglobe",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -14,9 +14,11 @@
     "@tailwindcss/vite": "^4.1.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.56.4",
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
     "react-router": "^7.5.3",
+    "react-router-dom": "^7.6.1",
     "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.5"
   },

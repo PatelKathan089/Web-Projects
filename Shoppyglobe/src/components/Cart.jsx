@@ -1,9 +1,28 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useFetch } from "../hooks/useFetch";
 import CartItem from "./CartItem";
 import { useNavigate } from "react-router";
+import Header from "./Header";
 
 function Cart() {
-  const cart = useSelector((state) => state.cart.cart_items);
+  // State to hold cart items:-
+  const [cart, setCart] = useState([]);
+
+  // Fetch cart items from the server:-
+  const { data, reFetch } = useFetch("http://localhost:3000/cart", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `JWT ${localStorage.getItem("token")}`,
+    },
+  });
+
+  useEffect(() => {
+    if (data) {
+      setCart(data);
+    }
+  }, [data]);
+
   const navigate = useNavigate();
 
   const handleCheckout = () => {
@@ -12,10 +31,13 @@ function Cart() {
 
   return (
     <>
+      <Header />
       <div className="flex flex-col gap-10 p-2">
         {cart.length > 0 ? (
           cart.map((item) => {
-            return <CartItem key={item.id} cart_item={item} />;
+            return (
+              <CartItem key={item._id} cart_item={item} reFetch={reFetch} />
+            );
           })
         ) : (
           <h1 className="text-center text-2xl font-bold mt-2.5">
