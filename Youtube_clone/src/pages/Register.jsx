@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 function Register() {
   const {
@@ -9,7 +10,25 @@ function Register() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = () => {};
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    try {
+      if (data.password === data.repeatPassword) {
+        let res = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (res.ok) {
+          toast.success("User Registered Successfully.");
+          navigate("/login");
+        }
+      }
+    } catch (err) {
+      console.log("Failed to register an user", err);
+    }
+  };
 
   return (
     <>
@@ -30,25 +49,45 @@ function Register() {
                 className="w-full shadow shadow-slate-300 rounded-sm px-2 py-2"
                 type="text"
                 placeholder="Your Name"
-                {...register("name", { required: true })}
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "Your name field is empty!",
+                  },
+                })}
               />
               <input
                 className="w-full shadow shadow-slate-300 rounded-sm px-2 py-2"
                 type="text"
                 placeholder="Your Email"
-                {...register("email", { required: true })}
+                {...register("email", {
+                  required: {
+                    value: true,
+                    message: "Your email field is empty!",
+                  },
+                })}
               />
               <input
                 className="w-full shadow shadow-slate-300 rounded-sm px-2 py-2"
                 type="text"
                 placeholder="Password"
-                {...register("password", { required: true })}
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "Your password field is empty!",
+                  },
+                })}
               />
               <input
                 className="w-full shadow shadow-slate-300 rounded-sm px-2 py-2"
                 type="text"
                 placeholder="Repeat Your Password"
-                {...register("repeatPassword", { required: true })}
+                {...register("repeatPassword", {
+                  required: {
+                    value: true,
+                    message: "Your repeat password field is empty!",
+                  },
+                })}
               />
               <input
                 className="w-full mt-2 px-2 py-1 bg-gradient-to-r from-sky-300 to-teal-300 rounded uppercase text-white font-bold cursor-pointer"

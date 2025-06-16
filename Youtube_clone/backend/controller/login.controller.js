@@ -1,0 +1,33 @@
+import registeredUsers from "../model/registeredUsers.model.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    // Find user by email:-
+    const regi_user = await registeredUsers.findOne({ email: email });
+    // This will give me a boolean value like true or false , if my password matches or not with the registered_user password:-
+    const matched_password = await bcrypt.compare(password, regi_user.password);
+
+    if (email === regi_user.email && matched_password) {
+      const token = jwt.sign({ uId: regi_user._id }, process.env.SECRET_KEY, {
+        expiresIn: "1hr",
+      });
+
+      return res.status(200).json({
+        message: "User logIn Successfully.",
+        token: token,
+        isLogged: true,
+      });
+    } else {
+      return res
+        .status(404)
+        .json({ message: "User not found!", isLogged: false });
+    }
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Failed to Login", error: err, isLogged: false });
+  }
+};

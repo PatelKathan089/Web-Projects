@@ -1,6 +1,7 @@
-import React from "react";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const {
@@ -9,7 +10,28 @@ function Login() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = () => {};
+  const { auth, setAuth } = useAuth();
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    try {
+      let res = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      let user = await res.json();
+
+      if (res.ok) {
+        setAuth(user.isLogged);
+        toast.success('User loggedIn successfully!');
+        navigate('/home');
+      }
+    } catch (err) {
+      console.log("Failed to Login", err);
+    }
+  };
   return (
     <>
       <div className="w-screen h-screen bg-gradient-to-r from-[#89f7fe] to-[#c2e9fb] flex justify-center items-center">
@@ -26,13 +48,17 @@ function Login() {
               onSubmit={handleSubmit(onSubmit)}
             >
               <input
-                {...register("email", { required: true })}
+                {...register("email", {
+                  required: { value: true, message: "email is empty!" },
+                })}
                 className="w-full shadow shadow-slate-300 rounded-sm px-2 py-2"
                 type="text"
                 placeholder="Your Email"
               />
               <input
-                {...register("password", { required: true })}
+                {...register("password", {
+                  required: { value: true, message: "password is empty!" },
+                })}
                 className="w-full shadow shadow-slate-300 rounded-sm px-2 py-2"
                 type="text"
                 placeholder="Password"
