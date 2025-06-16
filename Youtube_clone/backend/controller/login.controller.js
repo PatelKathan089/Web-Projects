@@ -18,16 +18,11 @@ export const loginUser = async (req, res) => {
       return res.status(200).json({
         message: "User logIn Successfully.",
         token: token,
-        isLogged: true,
       });
     } else {
-      return res
-        .status(404)
-        .json({ message: "User not found!", isLogged: false });
+      return res.status(404).json({ message: "User not found!" });
     }
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Failed to Login", error: err, isLogged: false });
+    return res.status(500).json({ message: "Failed to Login", error: err });
   }
 };

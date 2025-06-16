@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import { AuthProvider } from "./context/AuthContext.jsx";
 import Error from "./pages/Error.jsx";
 import App from "./App.jsx";
 import Login from "./pages/Login.jsx";
@@ -11,16 +12,20 @@ import { ToastContainer } from "react-toastify";
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: App,
+    element: (
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    ),
     errorElement: <Error />,
   },
   {
     path: "/login",
-    Component: Login,
+    element: <Login />,
   },
   {
     path: "/register",
-    Component: Register,
+    element: <Register />,
   },
 ]);
 

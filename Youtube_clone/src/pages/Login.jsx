@@ -10,8 +10,6 @@ function Login() {
     formState: { errors },
   } = useForm();
 
-  const { auth, setAuth } = useAuth();
-
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -24,9 +22,9 @@ function Login() {
       let user = await res.json();
 
       if (res.ok) {
-        setAuth(user.isLogged);
-        toast.success('User loggedIn successfully!');
-        navigate('/home');
+        localStorage.setItem("token", user.token);
+        toast.success("User loggedIn successfully!");
+        navigate("/");
       }
     } catch (err) {
       console.log("Failed to Login", err);

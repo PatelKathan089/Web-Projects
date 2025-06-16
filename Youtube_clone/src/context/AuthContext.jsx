@@ -1,12 +1,23 @@
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 
 const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Applying sideEffect for getting token:-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
   return (
     <>
-      <AuthContext.Provider value={{ auth, setAuth }}>
+      <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
         {children}
       </AuthContext.Provider>
     </>
