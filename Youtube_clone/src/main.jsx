@@ -8,6 +8,7 @@ import App from "./App.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import { ToastContainer } from "react-toastify";
+import VideoPlayer from "./pages/VideoPlayer.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       </AuthProvider>
     ),
     errorElement: <Error />,
+  },
+  {
+    path: "/video-player",
+    element: <VideoPlayer />,
   },
   {
     path: "/login",

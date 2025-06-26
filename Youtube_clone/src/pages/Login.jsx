@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
-import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const {
@@ -23,6 +22,8 @@ function Login() {
 
       if (res.ok) {
         localStorage.setItem("token", user.token);
+        localStorage.setItem("userName", user.userName);
+        localStorage.setItem("avatar", user.avatar);
         toast.success("User loggedIn successfully!");
         navigate("/");
       }
