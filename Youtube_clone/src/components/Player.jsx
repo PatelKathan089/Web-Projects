@@ -21,8 +21,8 @@ function Player() {
   return (
     <>
       <div className="w-full h-full flex lg:flex-row flex-col overflow-y-auto">
-        <section className="lg:w-[70%] w-full h-full flex justify-center">
-          <div className="card w-[95%] h-full flex flex-col gap-2 mt-2.5">
+        <section className="lg:w-[70%] w-full flex justify-center">
+          <div className="card w-[95%] flex flex-col gap-2 mt-2.5">
             {/* ...................Video section..................................... */}
             <div className="aspect-video">
               <iframe
@@ -231,16 +231,16 @@ function Player() {
             {/* .........................End Of Card........................... */}
           </div>
         </section>
-        <section className="lg:w-[30%] w-full h-full flex flex-col gap-5 items-center pr-2.5">
+        <section className="lg:w-[30%] w-full flex flex-col gap-5 items-center pt-2.5 pr-2.5">
           {/* .............................Playlist............................. */}
-          <div className="flex justify-center flex-wrap lg:flex-col lg:flex-nowrap lg:justify-baseline gap-2.5 w-full h-full lg:shadow shadow-slate-400 p-2.5 rounded-lg overflow-y-auto scrollbar-thin">
+          <div className="flex justify-center flex-wrap lg:flex-col lg:flex-nowrap lg:justify-start gap-2.5 w-full lg:min-h-[85%] lg:shadow shadow-slate-400 p-2.5 rounded-lg overflow-y-auto scrollbar-thin">
             <h1 className="hidden lg:block font-semibold text-lg">Playlist</h1>
             {videoInfo.playlist.length > 0 &&
               videoInfo.playlist.map((playlist, index) => {
                 return (
                   <div
                     key={index}
-                    className="playlist-card sm:w-[48%] w-full lg:w-full flex flex-col lg:flex-row lg:gap-4 gap-0.5"
+                    className="playlist-card sm:w-[48%] w-full lg:w-full lg:my-1.5 flex flex-col lg:flex-row lg:gap-4 gap-0.5"
                   >
                     <img
                       className="w-full lg:w-[130px] rounded-lg"
@@ -256,7 +256,7 @@ function Player() {
               })}
           </div>
           {/* ..........................Related Videos.......................... */}
-          <div className="flex justify-center flex-wrap lg:flex-col lg:flex-nowrap lg:justify-baseline gap-2.5 w-full h-full lg:shadow shadow-slate-400 p-2.5 rounded-lg overflow-y-auto scrollbar-thin">
+          <div className="flex justify-center flex-wrap lg:flex-col lg:flex-nowrap lg:justify-start gap-2.5 w-full lg:min-h-max lg:shadow shadow-slate-400 p-2.5 rounded-lg">
             <h1 className="hidden lg:block font-semibold text-lg">
               More Videos
             </h1>
@@ -265,7 +265,7 @@ function Player() {
                 return (
                   <div
                     key={index}
-                    className="playlist-card sm:w-[48%] w-full lg:w-full flex flex-col lg:flex-row lg:gap-4 gap-0.5"
+                    className="playlist-card sm:w-[48%] w-full lg:w-full lg:my-1.5 flex flex-col lg:flex-row lg:gap-4 gap-0.5"
                   >
                     <img
                       className="w-full lg:w-[130px] rounded-lg"

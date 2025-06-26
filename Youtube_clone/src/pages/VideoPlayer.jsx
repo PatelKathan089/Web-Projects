@@ -13,7 +13,7 @@ function VideoPlayer() {
         <SearchProvider>
           <Header2 display={display} toggleDisplay={setDisplay} />
         </SearchProvider>
-        <div className="w-full h-full flex gap-5">
+        <div className="w-full h-[calc(100vh-56px)] overflow-y-auto flex gap-5">
           <div
             className={
               display
