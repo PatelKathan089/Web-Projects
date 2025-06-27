@@ -1,9 +1,15 @@
 import { useSearch } from "../context/SearchContext";
 import { useSidebar } from "../context/SidebarContext";
+import { useNavigate } from "react-router";
 
 function Header2({ display, toggleDisplay }) {
   const { toggleSidebar, setToggleSidebar } = useSidebar();
   const { toggleSearch, setToggleSearch } = useSearch();
+  const navigate = useNavigate();
+
+  const handleClick = ()=>{
+    navigate('/channel');
+  }
   return (
     <>
       <div
@@ -75,7 +81,7 @@ function Header2({ display, toggleDisplay }) {
           >
             <img src="./src/assets/search.svg" alt="Search button" />
           </button>
-          <button className="flex items-center px-1.5 py-1 md:px-2.5 md:py-1.5 gap-1.5 bg-slate-100 rounded-full hover:bg-slate-200 hover:cursor-pointer">
+          <button type="button" onClick={handleClick} className="flex items-center px-1.5 py-1 md:px-2.5 md:py-1.5 gap-1.5 bg-slate-100 rounded-full hover:bg-slate-200 hover:cursor-pointer">
             <div>
               <img src="./src/assets/create.svg" alt="create_btn_icon" />
             </div>

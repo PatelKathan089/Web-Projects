@@ -9,6 +9,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import { ToastContainer } from "react-toastify";
 import VideoPlayer from "./pages/VideoPlayer.jsx";
+import Channel from "./pages/Channel.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/channel",
+    element: <Channel />,
   },
 ]);
 
