@@ -13,6 +13,16 @@ dist-ssr
 *.local
 .env
 
+# Ignore uploaded media files
+Youtube_clone/backend/uploads/
+
+# Ignore video/audio files
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wav
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
