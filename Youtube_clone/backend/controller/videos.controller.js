@@ -139,3 +139,85 @@ export const getVideos = async (req, res) => {
       .json({ message: "Server's Internal Error!", error: err });
   }
 };
+
+export const addComments = async (req, res) => {
+  const { profilePic, comment, userName, videoId } = req.body;
+
+  try {
+    const myVideo = await videos.findOne({ videoId: videoId });
+
+    if (!myVideo) {
+      return res.status(404).json({ msg: "Video not found!" });
+    }
+
+    myVideo.comments.push({
+      author: `@${userName}`,
+      authorProfileImageUrl: profilePic,
+      text: comment,
+      publishedAt: new Date(),
+      likeCount: 0,
+    });
+
+    await myVideo.save();
+    return res.status(201).json({
+      msg: "Comment added successfully",
+      comment: {
+        author: `@${userName}`,
+        authorProfileImageUrl: profilePic,
+        text: comment,
+        publishedAt: new Date(),
+        likeCount: 0,
+      },
+    });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ msg: "Server's internal error!", error: err });
+  }
+};
+
+export const editComments = async (req, res) => {
+  try {
+    const { author, videoId, editedComment } = req.body;
+
+    const result = await videos.updateOne(
+      { videoId, "comments.author": author }, // match author in comments array
+      { $set: { "comments.$.text": editedComment } } // update first match only
+    );
+
+    if (result.modifiedCount === 0) {
+      return res
+        .status(404)
+        .json({ error: "Comment not found or not updated" });
+    }
+
+    res.status(200).json({ message: "Comment updated successfully" });
+  } catch (error) {
+    console.error("Error editing comment:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const deleteComments = async (req, res) => {
+  try {
+    const { author, videoId } = req.body;
+
+    const video = await videos.findOne({ videoId });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    video.comments = video.comments.filter(
+      (comment) => comment.author !== author
+    );
+    await video.save();
+
+    res.status(200).json({
+      msg: "Comment deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};

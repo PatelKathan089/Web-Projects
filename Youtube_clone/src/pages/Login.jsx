@@ -29,6 +29,7 @@ function Login() {
       }
     } catch (err) {
       console.log("Failed to Login", err);
+      toast.error("Failed to login")
     }
   };
   return (

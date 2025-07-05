@@ -1,9 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
+import { toast } from "react-toastify";
 
 function Player() {
   const commentInputRef = useRef(null);
   const commentBtnRef = useRef(null);
+
+  const [myComment, setMyComment] = useState({
+    profilePic: localStorage.getItem("avatar"),
+    comment: "",
+    videoId: "",
+    userName: localStorage.getItem("userName"),
+  });
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedComment, setEditedComment] = useState("");
 
   const commentFocus = () => {
     commentBtnRef.current.classList.replace("bg-stone-300/60", "bg-blue-500");
@@ -17,6 +29,80 @@ function Player() {
   const location = useLocation();
   const videoInfo = location.state;
   const src = videoInfo.player.embedHtml.split(" ")[3].slice(7, -1);
+  const currentUser = `@${localStorage.getItem("userName")}`;
+
+  useEffect(() => {
+    setComments(videoInfo.comments);
+  }, []);
+
+  console.log(comments);
+
+  // Crud operations for comments:-
+  const handleComment = async () => {
+    if (!myComment) {
+      toast.error("Please Enter your comment!");
+    }
+    const res = await fetch("http://localhost:3000/videos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(myComment),
+    });
+    const data = await res.json();
+    console.log(data.comment);
+
+    if (res.ok) {
+      setComments([...comments, data.comment]);
+      setMyComment({
+        profilePic: localStorage.getItem("avatar"),
+        comment: "",
+        videoId: "",
+        userName: localStorage.getItem("userName"),
+      });
+      toast.success("Comment added successfuly");
+    } else {
+      toast.error("Failed to post comment.");
+    }
+  };
+
+  const handleEditComment = async (author, videoId, editedComment) => {
+    const res = await fetch("http://localhost:3000/videos", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ author, videoId, editedComment }),
+    });
+
+    if (res.ok) {
+      setComments((prev) =>
+        prev.map((comment) =>
+          comment.author === author
+            ? { ...comment, text: editedComment }
+            : comment
+        )
+      );
+      setIsEditing(false);
+      toast.success("Comment updated!");
+    } else {
+      toast.error("Failed to update comment.");
+    }
+  };
+
+  const handleDeleteComment = async (author, videoId) => {
+    const res = await fetch("http://localhost:3000/videos", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ author, videoId }),
+    });
+    if (res.ok) {
+      setComments((prev) => {
+        return prev.filter((comment) => {
+          return comment.author !== author;
+        });
+      });
+      toast.success("Comment deleted successfully");
+    } else {
+      toast.error("Failed to delete comment.");
+    }
+  };
 
   return (
     <>
@@ -149,12 +235,20 @@ function Player() {
                   <input
                     onFocus={commentFocus}
                     onBlur={commentBlur}
+                    onChange={(e) => {
+                      setMyComment({
+                        ...myComment,
+                        comment: e.target.value,
+                        videoId: videoInfo.videoId,
+                      });
+                    }}
                     ref={commentInputRef}
                     className="w-full px-2 py-1 focus:outline-0 border-b border-b-gray-400 focus:border-b-black"
                     type="text"
                   />
                   <button
                     ref={commentBtnRef}
+                    onClick={handleComment}
                     className="self-end hidden px-3 py-1 mx-1.5 rounded-full hover:cursor-pointer bg-stone-300/60"
                   >
                     Comment
@@ -162,37 +256,106 @@ function Player() {
                 </div>
               </div>
               <div className="md:flex hidden flex-col gap-2.5 mt-4 p-2.5">
-                {videoInfo.comments.map((comment, index) => {
-                  return (
-                    <div key={comment._id} className="flex justify-between">
-                      <div className="flex items-center gap-3">
-                        <img
-                          className="w-[40px] h-[40px] bg-slate-200 rounded-full"
-                          src={comment?.authorProfileImageUrl}
-                          alt="author_profile-imgage"
-                        />
-                        <div className="flex flex-col gap-0.5">
-                          <span className=" text-sm font-semibold">
-                            {comment.author}
-                          </span>
-                          <span className="">{comment.text}</span>
-                          <div className="flex items-center gap-3.5">
-                            <button className="hover:cursor-pointer">
-                              <i className="fa-regular fa-thumbs-up rounded-full p-1 hover:bg-gray-200"></i>
-                              <span className="ml-1 text-gray-400">
-                                {comment.likeCount}
-                              </span>
-                            </button>
-                            <button className="rounded-full hover:bg-gray-200 hover:cursor-pointer">
-                              <i className="fa-regular fa-thumbs-down rotate-180 rotate-x-180"></i>
-                            </button>
+                {comments &&
+                  comments.map((comment, index) => {
+                    const isAuthor = comment.author === currentUser;
+                    const isHovered = hoveredIndex === index;
+                    return (
+                      <div
+                        onMouseEnter={() => {
+                          setHoveredIndex(index);
+                        }}
+                        onMouseLeave={() => {
+                          setHoveredIndex(null);
+                        }}
+                        key={comment._id}
+                        className="flex justify-between"
+                      >
+                        <div className="flex items-center gap-3">
+                          <img
+                            className="w-[40px] h-[40px] bg-slate-200 rounded-full"
+                            src={comment?.authorProfileImageUrl}
+                            alt="author_profile-imgage"
+                          />
+                          <div className="flex flex-col gap-0.5">
+                            <span className=" text-sm font-semibold">
+                              {comment.author}
+                            </span>
+                            {isEditing && isAuthor ? (
+                              <div className="flex items-center gap-2.5">
+                                <input
+                                  onChange={(e) => {
+                                    setEditedComment(e.target.value);
+                                  }}
+                                  placeholder="Enter your comment..."
+                                  className="border border-gray-400 rounded-lg w-[25vw] px-2 py-1"
+                                />
+                                <button
+                                  onClick={() => {
+                                    handleEditComment(
+                                      comment.author,
+                                      videoInfo.videoId,
+                                      editedComment
+                                    );
+                                  }}
+                                  className="px-2 py-1 rounded-full bg-blue-400 cursor-pointer hover:outline"
+                                >
+                                  Comment
+                                </button>
+                              </div>
+                            ) : (
+                              <span className="">{comment.text}</span>
+                            )}
+
+                            <div className="flex items-center gap-3.5">
+                              <button className="hover:cursor-pointer">
+                                <i className="fa-regular fa-thumbs-up rounded-full p-1 hover:bg-gray-200"></i>
+                                <span className="ml-1 text-gray-400">
+                                  {comment.likeCount}
+                                </span>
+                              </button>
+                              <button className="rounded-full hover:bg-gray-200 hover:cursor-pointer">
+                                <i className="fa-regular fa-thumbs-down rotate-180 rotate-x-180"></i>
+                              </button>
+                            </div>
                           </div>
                         </div>
+
+                        <div className="relative">
+                          <img
+                            className="cursor-pointer"
+                            src="./src/assets/menu.svg"
+                            alt="options"
+                          />
+                          {isAuthor && isHovered && (
+                            <div className="absolute bottom-0 left-0 flex flex-col gap-1 shadow shadow-gray-500 rounded-xl p-1 bg-white z-10">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setIsEditing(!isEditing);
+                                }}
+                                className="px-2 py-1 rounded-lg cursor-pointer hover:bg-gray-400"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  handleDeleteComment(
+                                    comment.author,
+                                    videoInfo.videoId
+                                  );
+                                }}
+                                className="px-2 py-1 rounded-lg cursor-pointer hover:bg-gray-400"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      <img src="./src/assets/menu.svg" alt="options" />
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
               {/* .............This section will appear only on mobile devices........... */}
               <div className="md:hidden text-[12px] flex flex-col gap-2.5 mt-4 p-2.5 bg-stone-300/50 shadow shadow-stone-300 rounded-lg">

@@ -5,6 +5,7 @@ import "dotenv/config";
 import { loginRoute } from "./routes/login.routes.js";
 import { registerRoute } from "./routes/register.routes.js";
 import { videosRoute } from "./routes/videos.route.js";
+import { channelRoutes } from "./routes/channel.route.js";
 
 const port = 3000;
 const app = express();
@@ -19,8 +20,11 @@ mongoose.connection.on("error", () => {
   console.log("Your server is not connected to your database!");
 });
 
+// Sereve my upload folder public:-
+app.use("/uploads", express.static("uploads"));
+
 // Body-Parser middleware for parsing json data of req.body:-
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 
 // Cors middleware for resource sharing across different urls:-
 app.use(cors());
@@ -29,7 +33,8 @@ app.use(cors());
 loginRoute(app);
 registerRoute(app);
 videosRoute(app);
+channelRoutes(app);
 
 app.listen(port, () => {
-  console.log("Your app server is running on http://localhost/3000");
+  console.log("Your app server is running on http://localhost:3000/");
 });

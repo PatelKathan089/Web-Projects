@@ -1,15 +1,53 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { useSearch } from "../context/SearchContext";
 import { useSidebar } from "../context/SidebarContext";
-import { useNavigate } from "react-router";
+import { useFilter } from "../context/FilterContext";
+import { toast } from "react-toastify";
 
 function Header2({ display, toggleDisplay }) {
   const { toggleSidebar, setToggleSidebar } = useSidebar();
   const { toggleSearch, setToggleSearch } = useSearch();
+  const { searchString, setSearchString, setFilteredVideos } = useFilter();
+  const [showChannel, setShowChannel] = useState(false);
   const navigate = useNavigate();
 
-  const handleClick = ()=>{
-    navigate('/channel');
-  }
+  const handleClick = () => {
+    navigate("/create-channel");
+  };
+
+  const getData = async () => {
+    const res = await fetch("http://localhost:3000/channel");
+    const channel = await res.json();
+    channel.data.length > 0 ? setShowChannel(true) : setShowChannel(false);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  // Search Functionality:-
+  const handleChange = (e) => {
+    setSearchString(e.target.value.trim().toLowerCase());
+    if (e.target.value.trim().toLowerCase() === "") {
+      setFilteredVideos([]);
+    }
+  };
+
+  const handleSearch = async () => {
+    if (!searchString) {
+      toast.info("Please type the video title!");
+      return;
+    }
+    const res = await fetch("http://localhost:3000/videos");
+    const data = await res.json();
+    const videos = data.data;
+    const filteredVideos = videos.filter((video) => {
+      return video.title.trim().toLowerCase().includes(searchString);
+    });
+    setFilteredVideos(filteredVideos);
+  };
+
   return (
     <>
       <div
@@ -47,6 +85,7 @@ function Header2({ display, toggleDisplay }) {
         <div className="flex items-center gap-2.5">
           <div className="hidden md:flex h-[40px] items-center">
             <input
+              onChange={handleChange}
               placeholder="Search"
               className="w-[25vw] h-full px-4 rounded-l-full border border-gray-400 focus:outline-blue-300"
               type="search"
@@ -55,6 +94,7 @@ function Header2({ display, toggleDisplay }) {
             />
             <button
               type="button"
+              onClick={handleSearch}
               className="px-5 h-full rounded-r-full bg-gray-100 border border-l-0 border-gray-400 hover:cursor-pointer hover:bg-gray-200"
             >
               <img src="./src/assets/search.svg" alt="Search button" />
@@ -81,12 +121,29 @@ function Header2({ display, toggleDisplay }) {
           >
             <img src="./src/assets/search.svg" alt="Search button" />
           </button>
-          <button type="button" onClick={handleClick} className="flex items-center px-1.5 py-1 md:px-2.5 md:py-1.5 gap-1.5 bg-slate-100 rounded-full hover:bg-slate-200 hover:cursor-pointer">
-            <div>
-              <img src="./src/assets/create.svg" alt="create_btn_icon" />
-            </div>
-            <span className="text-[12px] md:text-base">Create</span>
-          </button>
+          {showChannel ? (
+            <button
+              className="flex items-center px-1.5 py-1 md:px-2.5 md:py-1.5 gap-1.5 bg-slate-100 rounded-full hover:bg-slate-200 hover:cursor-pointer"
+              type="button"
+              onClick={() => {
+                navigate("/channel");
+              }}
+            >
+              View Channel
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleClick}
+              className="flex items-center px-1.5 py-1 md:px-2.5 md:py-1.5 gap-1.5 bg-slate-100 rounded-full hover:bg-slate-200 hover:cursor-pointer"
+            >
+              <div>
+                <img src="./src/assets/create.svg" alt="create_btn_icon" />
+              </div>
+              <span className="text-[12px] md:text-base">Create</span>
+            </button>
+          )}
+
           <button className="hidden md:block p-2 rounded-full hover:bg-slate-200 hover:cursor-pointer">
             <div>
               <img
@@ -130,6 +187,7 @@ function Header2({ display, toggleDisplay }) {
 
         <div className="flex h-[40px] items-center">
           <input
+            onChange={handleChange}
             placeholder="Search"
             className="w-full h-full px-4 rounded-l-full border border-gray-400 focus:outline-blue-300"
             type="search"
@@ -137,6 +195,7 @@ function Header2({ display, toggleDisplay }) {
             id=""
           />
           <button
+            onClick={handleSearch}
             type="button"
             className="px-5 h-full rounded-r-full bg-gray-100 border border-l-0 border-gray-400 hover:cursor-pointer hover:bg-gray-200"
           >
