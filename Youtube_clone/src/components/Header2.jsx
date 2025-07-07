@@ -10,6 +10,7 @@ function Header2({ display, toggleDisplay }) {
   const { toggleSearch, setToggleSearch } = useSearch();
   const { searchString, setSearchString, setFilteredVideos } = useFilter();
   const [showChannel, setShowChannel] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -46,6 +47,17 @@ function Header2({ display, toggleDisplay }) {
       return video.title.trim().toLowerCase().includes(searchString);
     });
     setFilteredVideos(filteredVideos);
+  };
+
+  const handleLogout = (e) => {
+    try {
+      localStorage.clear();
+      window.location.reload();
+      toast.success("Logout successfully");
+    } catch (err) {
+      toast.error("Logout unSuccessful!");
+      console.log("Logout Error:", err);
+    }
   };
 
   return (
@@ -126,7 +138,7 @@ function Header2({ display, toggleDisplay }) {
               className="flex items-center px-1.5 py-1 md:px-2.5 md:py-1.5 gap-1.5 bg-slate-100 rounded-full hover:bg-slate-200 hover:cursor-pointer"
               type="button"
               onClick={() => {
-                navigate("/channel");
+                navigate("/channel/home");
               }}
             >
               View Channel
@@ -152,12 +164,41 @@ function Header2({ display, toggleDisplay }) {
               />
             </div>
           </button>
-          <div className="flex items-center justify-center p-1 rounded-full hover:cursor-pointer">
+          <div
+            onMouseEnter={() => {
+              setIsHovered(true);
+            }}
+            onMouseLeave={() => {
+              setIsHovered(false);
+            }}
+            className="relative flex items-center justify-center p-1 rounded-full hover:cursor-pointer"
+          >
             <img
               src={localStorage.getItem("avatar")}
               className="w-[30px] h-[30px] rounded-full"
               alt=""
             />
+            {isHovered && (
+              <div className="w-max absolute top-10 -left-17 z-20 shadow shadow-slate-500 rounded-lg flex flex-col items-center p-1 bg-white">
+                <div className="flex  items-center gap-1">
+                  <img
+                    className="w-6 h-6"
+                    src={localStorage.getItem("avatar")}
+                    alt=""
+                  />
+                  <span className="text-sm md:text-base">
+                    {localStorage.getItem("userName")}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="px-2 py-1 cursor-pointer bg-blue-500 text-white rounded-xl text-sm my-1 hover:outline hover:outline-red-700 hover:bg-blue-600"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </div>
         {/* -------------------------- End --------------------------------- */}

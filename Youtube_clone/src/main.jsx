@@ -1,19 +1,23 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
+import { lazy, Suspense } from "react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./context/AuthContext.jsx";
-import Error from "./pages/Error.jsx";
 import App from "./App.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
-import VideoPlayer from "./pages/VideoPlayer.jsx";
-import CreateChannel from "./components/CreateChannel.jsx";
-import Channel from "./pages/Channel.jsx";
-import ChannelPlayer from "./pages/ChannelPlayer.jsx";
-import ChannelHome from "./components/ChannelHome.jsx";
-import ChannelAddVideos from "./components/ChannelAddVideos.jsx";
+import Spinner from "./components/Spinner.jsx";
+const VideoPlayer = lazy(() => import("./pages/VideoPlayer.jsx"));
+const CreateChannel = lazy(() => import("./components/CreateChannel.jsx"));
+const Channel = lazy(() => import("./pages/Channel.jsx"));
+const ChannelPlayer = lazy(() => import("./pages/ChannelPlayer.jsx"));
+const ChannelHome = lazy(() => import("./components/ChannelHome.jsx"));
+const ChannelAddVideos = lazy(() =>
+  import("./components/ChannelAddVideos.jsx")
+);
+const Error = lazy(() => import("./pages/Error.jsx"));
 
 const router = createBrowserRouter([
   {
@@ -23,11 +27,19 @@ const router = createBrowserRouter([
         <App />
       </AuthProvider>
     ),
-    errorElement: <Error />,
+    errorElement: (
+      <Suspense fallback={<Spinner />}>
+        <Error />
+      </Suspense>
+    ),
   },
   {
     path: "/video-player",
-    element: <VideoPlayer />,
+    element: (
+      <Suspense fallback={<Spinner />}>
+        <VideoPlayer />
+      </Suspense>
+    ),
   },
   {
     path: "/login",
@@ -39,25 +51,45 @@ const router = createBrowserRouter([
   },
   {
     path: "/create-channel",
-    element: <CreateChannel />,
+    element: (
+      <Suspense fallback={<Spinner />}>
+        <CreateChannel />
+      </Suspense>
+    ),
   },
   {
     path: "/channel",
-    element: <Channel />,
+    element: (
+      <Suspense fallback={<Spinner />}>
+        <Channel />
+      </Suspense>
+    ),
     children: [
       {
         path: "home",
-        element: <ChannelHome/>
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ChannelHome />
+          </Suspense>
+        ),
       },
       {
         path: "addVideos",
-        element: <ChannelAddVideos/>
-      }
-    ]
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ChannelAddVideos />
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
     path: "/channel-player",
-    element: <ChannelPlayer />,
+    element: (
+      <Suspense fallback={<Spinner />}>
+        <ChannelPlayer />
+      </Suspense>
+    ),
   },
 ]);
 

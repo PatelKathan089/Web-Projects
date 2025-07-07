@@ -10,10 +10,6 @@ const ChannelSchema = new mongoose.Schema({
   videos: {
     type: [
       {
-        videoId: {
-          type: String,
-          default: () => new mongoose.Types.ObjectId().toString(),
-        },
         title: {
           type: String,
           required: [

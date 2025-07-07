@@ -93,8 +93,10 @@ function Channel() {
               <p className="text-gray-500">100k views</p>
             </div>
             <div className="text-sm text-gray-500">
-              <span>welcome to this official youtube Channel</span>
-              <span className="ml-1">...more</span>
+              <span>{channel.description}</span>
+              {channel.description?.length > 15 && (
+                <span className="ml-1">...more</span>
+              )}
             </div>
             <div className="text-sm">
               <a className="text-blue-600 hover:underline" href="">

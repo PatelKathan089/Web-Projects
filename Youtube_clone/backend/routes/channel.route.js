@@ -1,9 +1,12 @@
 import multer from "multer";
 import fs from "fs";
 import path from "path";
-import { createChannel } from "../controller/channel.controller.js";
-import { addChannelContent } from "../controller/channel.controller.js";
-import { getChannel } from "../controller/channel.controller.js";
+import {
+  getChannel,
+  addChannelContent,
+  createChannel,
+  deleteVideo,
+} from "../controller/channel.controller.js";
 
 const uploadPath = "./uploads";
 if (!fs.existsSync(uploadPath)) {
@@ -43,4 +46,5 @@ export const channelRoutes = (app) => {
     ]),
     addChannelContent
   );
+  app.delete("/channel", deleteVideo);
 };

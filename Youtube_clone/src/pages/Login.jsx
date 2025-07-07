@@ -29,7 +29,7 @@ function Login() {
       }
     } catch (err) {
       console.log("Failed to Login", err);
-      toast.error("Failed to login")
+      toast.error("Failed to login");
     }
   };
   return (
@@ -69,6 +69,11 @@ function Login() {
                 value="Sign In"
               />
             </form>
+            {(errors.email || errors.password) && (
+              <p className="text-red-500 font-semibold text-center">
+                {errors.email?.message || errors.password?.message}
+              </p>
+            )}
           </div>
           <div className="text-sm self-center mt-2">
             <span className="">Don't have an account?</span>

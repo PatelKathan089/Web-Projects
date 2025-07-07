@@ -2,7 +2,7 @@ import channel from "../model/channel.model.js";
 import mongoose from "mongoose";
 
 export const createChannel = async (req, res) => {
-  const { channelName, channelHandle } = req.body;
+  const { channelName, channelHandle, channelDescription } = req.body;
 
   // Create profileImg object
   const userImg = req.file;
@@ -18,6 +18,7 @@ export const createChannel = async (req, res) => {
     const newChannel = new channel({
       name: channelName,
       handle: `@${channelHandle}`,
+      description: channelDescription,
       profilePic: profileImg,
     });
     await newChannel.save();
@@ -61,7 +62,6 @@ export const addChannelContent = async (req, res) => {
       const thumbnailUrl = `/uploads/${thumbnailFile.filename}`;
 
       const newVideo = {
-        videoId: new mongoose.Types.ObjectId().toString(),
         title,
         thumbnail: thumbnailUrl,
         description,
@@ -89,5 +89,28 @@ export const getChannel = async (req, res) => {
       .json({ msg: "Channel's data sended successfully.", data: data });
   } catch (err) {
     return res.status(500).json({ msg: "Server's internal error", error: err });
+  }
+};
+
+export const deleteVideo = async (req, res) => {
+  const { videoId, channelId } = req.body;
+
+  try {
+    const Channel = await channel.findById(channelId);
+
+    if (!Channel) {
+      return res.status(404).send("Channel not found!");
+    }
+
+    Channel.videos = Channel.videos.filter((video) => {
+      return video._id.toString() !== videoId;
+    });
+
+    await Channel.save();
+    return res.status(200).send("video deleted successfully");
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ msg: "Server's internal error!", error: err });
   }
 };

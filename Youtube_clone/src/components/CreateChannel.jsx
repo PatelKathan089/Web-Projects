@@ -16,6 +16,7 @@ function CreateChannel() {
     const formData = new FormData();
     formData.append("channelName", data.channelName);
     formData.append("channelHandle", data.channelHandle);
+    formData.append("channelDescription",data.channelDescription);
     formData.append("userImg", userImg);
     if (termsAccepted) {
       try {
@@ -96,6 +97,15 @@ function CreateChannel() {
                 className="w-full border border-gray-400 py-1 px-2 rounded-lg"
                 type="text"
               />
+            </div>
+            <div className="md:w-1/2 w-full flex items-center gap-1 my-1.5">
+              <label htmlFor="">Description:</label>
+              <textarea
+                {...register("channelDescription")}
+                placeholder="channel description"
+                className="w-full border border-gray-400 py-1 px-2 rounded-lg"
+                type="text"
+              ></textarea>
             </div>
             <div className="flex items-center gap-1 my-1.5 text-sm">
               <input
