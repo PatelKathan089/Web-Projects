@@ -1,12 +1,111 @@
-# React + Vite
+# 🎬 YouTube Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack YouTube clone application built using the **MERN Stack** (MongoDB, Express.js, React.js, Node.js). This project allows users to create channels, upload videos, watch them, leave comments, and manage their content.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎥 Upload and play videos
+- 📺 View channel-specific videos
+- 📝 Add, edit, and delete comments
+- 📤 Create and manage your own channel
+- 🔐 User authentication with secure password storage
+- 📁 File upload using **multer**
+- 💬 Toast notifications for user feedback
+- 🎨 Fully responsive UI with smooth UX
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+
+- React.js
+- Tailwind CSS
+- React Router
+- React Toastify
+
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- Multer (for file uploads)
+- Bcrypt.js (for password hashing)
+- JWT (for authentication)
+
+## 📂 Project Structure
+
+```
+Youtube_clone/
+├── backend/
+│ ├── controllers/
+| |
+│ ├── models/
+| |
+│ ├── routes/
+| |
+| ├── .env
+| |
+| ├── package.json
+| |
+│ └── server.js
+|
+├── src
+|    |__ assets
+|    |__ components
+|    |__ context
+|    |__ pages
+|    |__ styles
+|    |__ App.css
+|    |__ App.jsx
+|    |__ index.css
+|    |__ main.jsx
+|
+├── .gitignore
+|
+├── index.html
+|
+├── package.json
+|
+├── README.md
+|
+└── vite.config.js
+```
+
+## 💻 Installation & Running Locally
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/PatelKathan089/Web-Projects.git
+cd Web-Projects/Youtube_clone
+```
+
+2. **Frontend Setup**
+
+```bash
+npm install
+npm run dev // Start Frontend server
+```
+
+3. **Backend Setup**
+
+```bash
+cd backend
+npm install
+nodemon server.js // Start backend server
+```
+
+4. **Environment Variables**
+
+```bash
+MONGO_URI = <Your database connection Url>
+SECRET_KEY = <Setup key for jwt>
+MY_API_KEY = <Your Google api key>
+```
+
+## Github Link
+
+[Youtube Clone](https://github.com/PatelKathan089/Web-Projects/tree/master/Youtube_clone)
+
+## 📄 License
+
+This project is licensed under the **MIT License**
