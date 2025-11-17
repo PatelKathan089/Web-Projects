@@ -2,12 +2,12 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import "dotenv/config";
-import { loginRoute } from "./routes/login.routes.js";
-import { registerRoute } from "./routes/register.routes.js";
+
+import { loginRoute } from "./routes/login.route.js";
+import { registerRoute } from "./routes/register.route.js";
 import { videosRoute } from "./routes/videos.route.js";
 import { channelRoutes } from "./routes/channel.route.js";
 
-const port = 3000;
 const app = express();
 
 // Connecting my server to database:-
@@ -35,6 +35,8 @@ registerRoute(app);
 videosRoute(app);
 channelRoutes(app);
 
-app.listen(port, () => {
-  console.log("Your app server is running on http://localhost:3000/");
+// Start Server:-
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Your app server is running on http://localhost:${PORT}/`);
 });
